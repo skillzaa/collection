@@ -15,31 +15,43 @@ In addition to that there are many methods using which we can add , delete , sor
 ## The API
 ----------------------
 addNew :
+---
 addOld : under construction
+---
 delete :
-
+---
 setPropertyAll :
-
+---
 indexToId :
+---
 idToIndex :
-
+---
 isFirst :
+---
 isLast : 
+---
 getFirst :
+---
 getLast : 
-
+---
 search :
+---
 searchAll :
+---
 searchAnd :
+---
 searchAndAll :
-
+---
 find :
+---
 findChildren :
-
+---
 sort :
+---
 sortByProperty :
-
+---
 push :
+---
 length :
 
 
