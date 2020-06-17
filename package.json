@@ -1,0 +1,26 @@
+{
+  "name": "collection",
+  "version": "0.1.0",
+  "main": "src/Collection.js",
+  
+  "dependencies": {
+  },
+  "devDependencies": {
+    
+    "@rollup/plugin-babel": "^5.0.2",
+    "@rollup/plugin-commonjs": "^11.0.1",
+    "jest": "^26.0.1",
+    "jest-cli": "^26.0.1",
+    "rollup": "^1.29.0"
+  },
+  "scripts": {
+    "buildTest": "rollup -c rollup.config.two.js",
+    "buildDist": "rollup -c rollup.config.one.js",
+    "dev": "rollup -c -w",
+    "test": "jest ",
+    "pretest": "npm run buildTest"
+  },
+  "files": [
+    "dist"
+  ]
+}
