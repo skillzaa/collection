@@ -11,6 +11,12 @@ In addition to that there are many methods using which we can add , delete , sor
 ##How it Works
 >>When we create a collection object its creates an empty array and we are provided a number of methods to use.
 >>The array of Objects is accessable throught **collection.data**.
+>> We use **add** method to add new items into this collection and use **read** method to load previously created items (saved in database etc)
+>> Every item has these 4 properties:
+       -- id: (compulasary) for a new item the id will be assigned by the class however old items can bring their own ids however the id of an old item that is being **read** (loaded into) the collection its id should be unique.
+       -- sortOrder: Every item has sort order for sorting. The collection object has **sort** and **sortDesc** methods to sirt the collection based on any numerical property.
+       -- createdAt: Time of creation of the item (not must).
+       -- parentId : Though the items are independent but if the user wants he can add parentIds there by converting this flat list into a tree structure.
 
 ## The API
 ----------------------
