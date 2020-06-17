@@ -5,7 +5,7 @@ collection.useRandomIds = false;
 //................................
 describe("collection",()=>{
 for (let index = 1; index < 11; index++) {
-        collection.addNew();
+        collection.add();
         const len = collection.length;
         test(`length:${index}`,()=>{expect(len).toBe(index)});        
     }    

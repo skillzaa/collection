@@ -17,7 +17,7 @@ constructor(data:CollectionItem[]=[]) {
 this.data = data; //the aoo = an array not an object
 }
 
-public addNew(parentId:string|number|null=null) {
+public add(parentId:string|number|null=null) {
 const collectionItem = new CollectionItem();
 collectionItem.id = this.newId();
 collectionItem.sortOrder = this.sortOrderCounter++; //imp
@@ -26,6 +26,18 @@ collectionItem.parentId = parentId;
 collectionItem.createdAt = new Date().getTime();
 this.data.push(collectionItem);
 return collectionItem;
+}
+public read(item:CollectionItem) {
+if(typeof item.id==="undefined"){return false;}    
+if(this.idTypeMatch(item.id) !== true){return false;}
+if(this.isIdUnique(item.id) !== true){return false;}
+//if(typeof item.parentId !== ){return false;}
+//---set the values also
+if((typeof item.sortOrder == "undefined") || (typeof item.sortOrder !== "number") ){
+item.sortOrder = this.sortOrderCounter++; //imp    
+}
+this.data.push(item);
+return item;
 }
 //.......................abs
 
@@ -179,7 +191,7 @@ public push(a) {
 get length() {
     return this.data.length;
 }
-getNextByIndex(item:CollectionItem) {
+public getNextByIndex(item:CollectionItem) {
     let isLast = this.isLast(item.id);
     if (isLast == false) {
         let itemIndex = this.idToIndex(item.id);
@@ -190,7 +202,7 @@ getNextByIndex(item:CollectionItem) {
     }
 } //fn
 /**take its own aoo(arr of obj not aoo class) and not the this.data */
-getNextByIndex(item) {
+public getNextByIndex(item) {
     let isFirst = this.isFirst(item.id);
     if (isFirst == false) {
         let itemIndex = this.idToIndex(item.id);
@@ -200,7 +212,7 @@ getNextByIndex(item) {
         return false;
     }
 }
-setPropertyAll(property:string, value:any) {
+public setPropertyAll(property:string, value:any) {
     let arr = [];
     this.data.forEach(e => {
         e.setProperty(property,value);
@@ -236,5 +248,22 @@ private uuid() {
     });
 }
 //--------------------------
-
+private isIdUnique(id:string|number){    
+let isUnique:boolean = true;    
+this.data.forEach(e => {
+    if(e.id === id){
+        isUnique = false;
+    }
+});
+return isUnique;
+}
+private idTypeMatch(id:string|number){    
+if(typeof id === "string" && this.useRandomIds == true){
+    return true
+}
+if(typeof id === "number" && this.useRandomIds == false){
+    return true
+}
+return false;
+}
 } //class ends    

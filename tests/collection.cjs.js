@@ -33,7 +33,7 @@ class Collection {
         this.data = [];
         this.data = data; //the aoo = an array not an object
     }
-    addNew(parentId = null) {
+    add(parentId = null) {
         const collectionItem = new CollectionItem();
         collectionItem.id = this.newId();
         collectionItem.sortOrder = this.sortOrderCounter++; //imp
@@ -42,6 +42,24 @@ class Collection {
         collectionItem.createdAt = new Date().getTime();
         this.data.push(collectionItem);
         return collectionItem;
+    }
+    read(item) {
+        if (typeof item.id === "undefined") {
+            return false;
+        }
+        if (this.idTypeMatch(item.id) !== true) {
+            return false;
+        }
+        if (this.isIdUnique(item.id) !== true) {
+            return false;
+        }
+        //if(typeof item.parentId !== ){return false;}
+        //---set the values also
+        if ((typeof item.sortOrder == "undefined") || (typeof item.sortOrder !== "number")) {
+            item.sortOrder = this.sortOrderCounter++; //imp    
+        }
+        this.data.push(item);
+        return item;
     }
     //.......................abs
     indexToId(index) {
@@ -247,6 +265,25 @@ class Collection {
             var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
+    }
+    //--------------------------
+    isIdUnique(id) {
+        let isUnique = true;
+        this.data.forEach(e => {
+            if (e.id === id) {
+                isUnique = false;
+            }
+        });
+        return isUnique;
+    }
+    idTypeMatch(id) {
+        if (typeof id === "string" && this.useRandomIds == true) {
+            return true;
+        }
+        if (typeof id === "number" && this.useRandomIds == false) {
+            return true;
+        }
+        return false;
     }
 } //class ends
 
