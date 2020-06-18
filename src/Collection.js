@@ -23,7 +23,7 @@ export default class Collection {
         this.data.push(collectionItem);
         return collectionItem;
     }
-    read(item) {
+    load(item) {
         if (typeof item.id === "undefined") {
             return false;
         }
@@ -37,6 +37,9 @@ export default class Collection {
         //---set the values also
         if ((typeof item.sortOrder == "undefined") || (typeof item.sortOrder !== "number")) {
             item.sortOrder = this.sortOrderCounter++; //imp    
+        }
+        if ((typeof item.parentId == "undefined")) {
+            item.parentId = null; //imp    
         }
         this.data.push(item);
         return item;
@@ -88,7 +91,7 @@ export default class Collection {
         return false;
     } //
     search(prop = "id", value = 0) {
-        let final = [];
+        const final = [];
         this.data.forEach(e => {
             if (e[prop] == value) {
                 final.push(e);
@@ -191,7 +194,7 @@ export default class Collection {
     get length() {
         return this.data.length;
     }
-    getNextByIndex(item) {
+    getPrevByIndex(item) {
         let isLast = this.isLast(item.id);
         if (isLast == false) {
             let itemIndex = this.idToIndex(item.id);
@@ -202,16 +205,6 @@ export default class Collection {
         }
     } //fn
     /**take its own aoo(arr of obj not aoo class) and not the this.data */
-    getNextByIndex(item) {
-        let isFirst = this.isFirst(item.id);
-        if (isFirst == false) {
-            let itemIndex = this.idToIndex(item.id);
-            return this.data[itemIndex - 1];
-        }
-        else {
-            return false;
-        }
-    }
     setPropertyAll(property, value) {
         let arr = [];
         this.data.forEach(e => {

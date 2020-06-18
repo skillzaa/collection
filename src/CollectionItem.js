@@ -2,7 +2,6 @@ export default class CollectionItem {
     constructor() {
         this.id = "";
         this.parentId = null;
-        this.title = "";
         this.sortOrder = 0;
         this.createdAt = 0;
     }

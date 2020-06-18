@@ -1,7 +1,8 @@
-export default class CollectionItem {
+import ICollectionItem from './ICollectionItem.js';
+
+export default class CollectionItem implements ICollectionItem{
 public id : string|number = "";    
 public parentId : string|number|null = null;    
-public title : string ="";    
 public sortOrder :number =0;    
 public createdAt :number =0;
 
