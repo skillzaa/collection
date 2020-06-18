@@ -23,7 +23,7 @@ export default class Collection {
         this.data.push(collectionItem);
         return collectionItem;
     }
-    load(item) {
+    read(item) {
         if (typeof item.id === "undefined") {
             return false;
         }
@@ -82,7 +82,7 @@ export default class Collection {
         }
     } //getItem
     /**Just send back the first one  */
-    searchFirst(prop = "id", value = "") {
+    searchFirst(prop = "id", value) {
         for (let idx = 0; idx < this.data.length; idx++) {
             if (this.data[idx][prop] == value) {
                 return this.data[idx];
@@ -138,7 +138,7 @@ export default class Collection {
         });
         return final;
     } //
-    sort(property = "sortOrder", order = "ASC", overWrite = true) {
+    sort(property = "sortOrder", overWrite = true) {
         let sorted = this.data.sort((a, b) => {
             const bandA = a[property] || 0;
             const bandB = b[property] || 0;
@@ -161,7 +161,7 @@ export default class Collection {
             return newArray;
         }
     } //sortBySortOrder
-    sortDesc(property, overWrite = false, order = "ASC") {
+    sortDesc(property, overWrite = false) {
         let sorted = this.data.sort((a, b) => {
             const bandA = a[property] || 0;
             const bandB = b[property] || 0;
@@ -195,6 +195,16 @@ export default class Collection {
         return this.data.length;
     }
     getPrevByIndex(item) {
+        let isFirst = this.isFirst(item.id);
+        if (isFirst == false) {
+            let itemIndex = this.idToIndex(item.id);
+            return this.data[itemIndex - 1];
+        }
+        else {
+            return false;
+        }
+    } //fn
+    getNextByIndex(item) {
         let isLast = this.isLast(item.id);
         if (isLast == false) {
             let itemIndex = this.idToIndex(item.id);
@@ -218,12 +228,11 @@ export default class Collection {
     }
     //..............................................
     delete(itemOrId) {
-        ///this can be an id or an item  
         if (typeof itemOrId == 'object') {
             this.data = this.data.filter(i => i.id !== itemOrId.id);
         }
         else if (typeof itemOrId == 'number') {
-            this.data = this.data.filter(i => i.id !== itemOrId);
+            this.data = this.data.filter(i => { i.id !== itemOrId; });
         }
     }
     newId() {

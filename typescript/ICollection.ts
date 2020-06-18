@@ -1,6 +1,9 @@
 import ICollectionItem from './ICollectionItem';
 import CollectionItem from './CollectionItem';
-
+/**
+ * --- 2 global variables and
+ * --- 22 methods
+ */
 export default interface ICollection {
 useRandomIds:boolean;
 data:ICollectionItem[];
