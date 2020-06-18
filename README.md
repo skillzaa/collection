@@ -19,44 +19,41 @@ In addition to that there are many methods using which we can add , delete , sor
 
 ## The API
 ----------------------
-addNew :
----
-addOld : under construction
----
-delete :
----
-setPropertyAll :
----
-indexToId :
----
-idToIndex :
----
-isFirst :
----
-isLast : 
----
-getFirst :
----
-getLast : 
----
-search :
----
-searchAll :
----
-searchAnd :
----
-searchAndAll :
----
-find :
----
-findChildren :
----
-sort :
----
-sortByProperty :
----
-push :
----
-length :
----
+### Global Varialbes
+useRandomIds:boolean : This switch between using numberical sequential ids (mean 1,2,3...) or unique string based ids. For testing always make useRandomIds to false and for production code turn it true.
+data:ICollectionItem[] : This is the main data (array of objects) that this class is managing. This data is also directly accessable.
 
+## Methods
+-add(parentId:string|number|null):CollectionItem;
+-read(item:CollectionItem):CollectionItem|false;
+-indexToId(index:number):number|string;
+-idToIndex(id:string|number):number|null;
+- isFirst(id:string|number):boolean;
+- getFirst():ICollectionItem;
+- getLast():ICollectionItem;
+isLast(id:string|number):boolean;
+
+search(prop:string, value:string|number):CollectionItem[]|[];
+searchFirst(prop:string, value:any):CollectionItem|boolean;
+
+searchAnd(prop1:string, value1:any, prop2:string,value2:any):CollectionItem[]|[]; 
+searchAndFirst(prop1:string, value1:any, prop2:string, value2:any):boolean | CollectionItem;
+
+
+find(id:string|number):boolean|ICollectionItem;
+findChildren(parentItemId:string|number):ICollectionItem[]|[];
+        
+sort(property:string,overWrite:boolean):ICollectionItem[]; 
+sortDesc(property:string, overWrite:boolean):ICollectionItem[];
+    
+push(a:CollectionItem):CollectionItem[];
+    
+length():number;
+    
+getPrevByIndex(item:CollectionItem):CollectionItem|boolean;
+setPropertyAll(property:string, value:any):CollectionItem|boolean;
+    
+setRandom():void;
+    
+delete(itemOrId:number|CollectionItem):void;
+    
