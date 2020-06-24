@@ -261,13 +261,12 @@ private uuid() {
 }
 //--------------------------
 protected isIdUnique(id:string|number){    
-let isUnique:boolean = true;    
-this.data.forEach(e => {
-    if(e.id === id){
-        isUnique = false;
+for (let idx = 0; idx < this.data.length; idx++) {
+    if(this.data[idx].id == id){
+        return false;
     }
-});
-return isUnique;
+}    
+return true;
 }
 private idTypeMatch(id:string|number){    
 if(typeof id === "string" && this.useRandomIds == true){

@@ -299,13 +299,12 @@ class Collection {
     }
     //--------------------------
     isIdUnique(id) {
-        let isUnique = true;
-        this.data.forEach(e => {
-            if (e.id === id) {
-                isUnique = false;
+        for (let idx = 0; idx < this.data.length; idx++) {
+            if (this.data[idx].id == id) {
+                return false;
             }
-        });
-        return isUnique;
+        }
+        return true;
     }
     idTypeMatch(id) {
         if (typeof id === "string" && this.useRandomIds == true) {
