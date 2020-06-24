@@ -1,8 +1,8 @@
 import ICollectionItem from './ICollectionItem.js';
 ///this collection item is node--waoooo
 export default class CollectionItem implements ICollectionItem{
-parentId :number|null;    
-id : number|string|null;
+parentId :number|string;    
+id : number|string;
 sortOrder :number;
 title :string;
 selected :boolean;
@@ -30,8 +30,9 @@ childLess : null;
 ccw : null;
 //---------------------------------------------
 constructor(){
-this.parentId = null;    
-this.id = null;
+this.parentId = 0;    
+//No item can have id=0, this is just for newly created items who have not yet been given id yet. Consider it as null.
+this.id = 0;
 this.sortOrder = 0;
 this.title = "New Node";
 this.selected = false;

@@ -10,7 +10,7 @@ import ICollectionItem from "../interfaces/ICollectionItem.js";
 //.......................................
 export default class Collection implements ICollection{
 
-public useRandomIds:boolean = false;
+public useRandomIds:boolean = true;
 public data:ICollectionItem[]=[];
 
 private idCounter:number=1;
@@ -25,7 +25,7 @@ this.data = data; //the aoo = an array not an object
  * it should always return a collection Item INTERFACE and never an error.
  * @param parentId 
  */
-public add(parentId:string|number|null=null):CollectionItem {
+public add(parentId:string|number=""):CollectionItem {
 const collectionItem = new CollectionItem();
 collectionItem.id = this.newId();
 collectionItem.sortOrder = this.sortOrderCounter++; //imp
@@ -246,10 +246,9 @@ public delete(itemOrId:number|string|CollectionItem):void {
     }
 }
 private newId() {
-    if (this.useRandomIds === false) {
-        return this.idCounter++;
-    }
-    else {
+    if (this.useRandomIds === false) {  
+        return  this.idCounter++;
+    } else {
         return this.uuid();
     }
 }

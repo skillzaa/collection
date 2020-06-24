@@ -1,6 +1,6 @@
 export default interface ICollectionItem {
 id : string|number;    
-parentId ?: string|number|null;    
+parentId ?: string|number;    
 sortOrder :number;    
 createdAt ?:number;
 

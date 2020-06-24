@@ -4,8 +4,9 @@
 class CollectionItem {
     //---------------------------------------------
     constructor() {
-        this.parentId = null;
-        this.id = null;
+        this.parentId = 0;
+        //No item can have id=0, this is just for newly created items who have not yet been given id yet. Consider it as null.
+        this.id = 0;
         this.sortOrder = 0;
         this.title = "New Node";
         this.selected = false;
@@ -51,7 +52,7 @@ class CollectionItem {
 //.......................................
 class Collection {
     constructor(data = []) {
-        this.useRandomIds = false;
+        this.useRandomIds = true;
         this.data = [];
         this.idCounter = 1;
         this.sortOrderCounter = 1;
@@ -62,7 +63,7 @@ class Collection {
      * it should always return a collection Item INTERFACE and never an error.
      * @param parentId
      */
-    add(parentId = null) {
+    add(parentId = "") {
         const collectionItem = new CollectionItem();
         collectionItem.id = this.newId();
         collectionItem.sortOrder = this.sortOrderCounter++; //imp

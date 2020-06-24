@@ -7,7 +7,7 @@ import CollectionItem from "./CollectionItem.js";
 //.......................................
 export default class Collection {
     constructor(data = []) {
-        this.useRandomIds = false;
+        this.useRandomIds = true;
         this.data = [];
         this.idCounter = 1;
         this.sortOrderCounter = 1;
@@ -18,7 +18,7 @@ export default class Collection {
      * it should always return a collection Item INTERFACE and never an error.
      * @param parentId
      */
-    add(parentId = null) {
+    add(parentId = "") {
         const collectionItem = new CollectionItem();
         collectionItem.id = this.newId();
         collectionItem.sortOrder = this.sortOrderCounter++; //imp
