@@ -1,16 +1,15 @@
 import ICollectionItem from './ICollectionItem';
 import CollectionItem from './CollectionItem';
 /**
- * --- 2 global variables and
- * --- 22 methods
+ *-- 
  */
 export default interface ICollection {
 useRandomIds:boolean;
 data:ICollectionItem[];
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
-add(parentId:string|number|null):CollectionItem;
-read(item:CollectionItem):CollectionItem|false;
+add(parentId:string|number):CollectionItem;
+read(item:ICollectionItem):ICollectionItem|false;
 
 indexToId(index:number):number|string;
 idToIndex(id:string|number):number|null;
@@ -21,7 +20,7 @@ getLast():ICollectionItem;
 isLast(id:string|number):boolean;
 
 search(prop:string, value:string|number):CollectionItem[]|[];
-searchFirst(prop:string, value:any):CollectionItem|boolean;
+searchFirst(prop:keyof CollectionItem, value:any):CollectionItem|boolean;
 
 searchAnd(prop1:string, value1:any, prop2:string,value2:any):CollectionItem[]|[]; 
 searchAndFirst(prop1:string, value1:any, prop2:string, value2:any):boolean | CollectionItem;
@@ -38,7 +37,7 @@ push(a:CollectionItem):CollectionItem[];
 length():number;
     
 getPrevByIndex(item:CollectionItem):CollectionItem|boolean;
-setPropertyAll(property:string, value:any):CollectionItem|boolean;
+setPropertyAll(property:keyof CollectionItem, value:any):CollectionItem|boolean;
     
 setRandom():void;
     

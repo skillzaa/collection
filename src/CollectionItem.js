@@ -6,6 +6,7 @@ export default class CollectionItem {
         //No item can have id=0, this is just for newly created items who have not yet been given id yet. Consider it as null.
         this.id = 0;
         this.sortOrder = 0;
+        this.createdAt = 0;
         this.title = "New Node";
         this.selected = false;
         this.highlighted = false;

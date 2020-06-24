@@ -8,6 +8,7 @@ class CollectionItem {
         //No item can have id=0, this is just for newly created items who have not yet been given id yet. Consider it as null.
         this.id = 0;
         this.sortOrder = 0;
+        this.createdAt = 0;
         this.title = "New Node";
         this.selected = false;
         this.highlighted = false;
@@ -89,7 +90,7 @@ class Collection {
             item.sortOrder = this.sortOrderCounter++; //imp    
         }
         if ((typeof item.parentId == "undefined")) {
-            item.parentId = null; //imp    
+            item.parentId = 0; //imp    
         }
         this.data.push(item);
         return item;
@@ -132,7 +133,7 @@ class Collection {
         }
     } //getItem
     /**Just send back the first one  */
-    searchFirst(prop = "id", value) {
+    searchFirst(prop, value) {
         for (let idx = 0; idx < this.data.length; idx++) {
             if (this.data[idx][prop] == value) {
                 return this.data[idx];
@@ -239,7 +240,7 @@ class Collection {
     //-----------------------------------sort ends
     push(a) {
         this.data.push(a);
-        return this.data;
+        return true;
     }
     get length() {
         return this.data.length;
@@ -264,11 +265,11 @@ class Collection {
             return false;
         }
     } //fn
-    /**take its own aoo(arr of obj not aoo class) and not the this.data */
     setPropertyAll(property, value) {
         this.data.forEach(e => {
             e.setProperty(property, value);
         });
+        return true;
     }
     setRandom() {
         this.data.forEach(e => {

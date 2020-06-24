@@ -1,7 +1,7 @@
 "use strict";
 import CollectionItem from "./CollectionItem.js";
-import ICollection from "../interfaces/ICollection.js";
-import ICollectionItem from "../interfaces/ICollectionItem.js";
+import ICollection from "./ICollection.js";
+import ICollectionItem from "./ICollectionItem.js";
 
 /**
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
@@ -17,7 +17,7 @@ private idCounter:number=1;
 private sortOrderCounter:number= 1;
 
 
-constructor(data:CollectionItem[]=[]) {
+constructor(data:ICollectionItem[]=[]) {
 this.data = data; //the aoo = an array not an object
 }
 /**
@@ -26,7 +26,7 @@ this.data = data; //the aoo = an array not an object
  * @param parentId 
  */
 public add(parentId:string|number=""):CollectionItem {
-const collectionItem = new CollectionItem();
+const collectionItem:CollectionItem = new CollectionItem();
 collectionItem.id = this.newId();
 collectionItem.sortOrder = this.sortOrderCounter++; //imp
 //-----------------
@@ -35,7 +35,7 @@ collectionItem.createdAt = new Date().getTime();
 this.data.push(collectionItem);
 return collectionItem;
 }
-public read(item:CollectionItem):CollectionItem|false {
+public read(item:ICollectionItem):ICollectionItem|false {
 if(typeof item.id==="undefined"){return false;}    
 if(this.idTypeMatch(item.id) !== true){return false;}
 if(this.isIdUnique(item.id) !== true){return false;}
@@ -45,7 +45,7 @@ if((typeof item.sortOrder == "undefined") || (typeof item.sortOrder !== "number"
 item.sortOrder = this.sortOrderCounter++; //imp    
 }
 if((typeof item.parentId == "undefined")) {
-item.parentId = null; //imp    
+item.parentId = 0; //imp    
 }
 this.data.push(item);
 return item;
@@ -89,13 +89,13 @@ isLast(id:string|number):boolean {
     }
 } //getItem
 /**Just send back the first one  */
-searchFirst(prop:string = "id", value:any):CollectionItem|boolean {
+searchFirst(prop:keyof CollectionItem, value:any):CollectionItem|boolean {
     for (let idx = 0; idx < this.data.length; idx++) {
         if (this.data[idx][prop] == value) {
             return this.data[idx];
         }
     }
-    return false;
+return false;    
 } //
 
 search(prop:string = "id", value:string|number = 0):CollectionItem[]|[] {
@@ -129,7 +129,7 @@ searchAnd(prop1:string, value1:any, prop2:string, value2:any) :CollectionItem[]|
 } //
 //------------------Batch 3
 find(id:string|number):boolean|ICollectionItem {
-    let final = false;
+    let final:boolean|ICollectionItem = false;
     this.data.forEach(e => {
         if (e.id == id) {
             final = e;
@@ -137,8 +137,9 @@ find(id:string|number):boolean|ICollectionItem {
     });
     return final;
 } //getItem
+
 findChildren(parentItemId:string|number):ICollectionItem[]|[] {
-    let final = [];
+    let final:ICollectionItem[] = [];
     this.data.forEach(e => {
         if (e['parentId'] == parentItemId) {
             final.push(e);
@@ -195,14 +196,14 @@ sortDesc(property:string, overWrite = false):ICollectionItem[] {
     ////...................................
 } //sortBySortOrder        
 //-----------------------------------sort ends
-public push(a:CollectionItem):CollectionItem[] {
+public push(a:ICollectionItem):boolean {
     this.data.push(a);
-    return this.data;
+    return true;
 }
 get length():number {
     return this.data.length;
 }
-public getPrevByIndex(item:CollectionItem):CollectionItem|boolean {
+public getPrevByIndex(item:ICollectionItem):ICollectionItem|boolean {
     let isFirst = this.isFirst(item.id);
     if (isFirst == false) {
         let itemIndex = this.idToIndex(item.id);
@@ -222,13 +223,13 @@ public getNextByIndex(item:CollectionItem):CollectionItem|boolean {
         return false;
     }
 } //fn
-/**take its own aoo(arr of obj not aoo class) and not the this.data */
 
-public setPropertyAll(property:string, value:any):void {
+public setPropertyAll(property:keyof CollectionItem, value:any):boolean {
     let arr = [];
     this.data.forEach(e => {
         e.setProperty(property,value);
     });    
+return true;    
 }
 public setRandom():void {
     this.data.forEach(e => {

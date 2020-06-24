@@ -44,7 +44,7 @@ export default class Collection {
             item.sortOrder = this.sortOrderCounter++; //imp    
         }
         if ((typeof item.parentId == "undefined")) {
-            item.parentId = null; //imp    
+            item.parentId = 0; //imp    
         }
         this.data.push(item);
         return item;
@@ -87,7 +87,7 @@ export default class Collection {
         }
     } //getItem
     /**Just send back the first one  */
-    searchFirst(prop = "id", value) {
+    searchFirst(prop, value) {
         for (let idx = 0; idx < this.data.length; idx++) {
             if (this.data[idx][prop] == value) {
                 return this.data[idx];
@@ -194,7 +194,7 @@ export default class Collection {
     //-----------------------------------sort ends
     push(a) {
         this.data.push(a);
-        return this.data;
+        return true;
     }
     get length() {
         return this.data.length;
@@ -219,12 +219,12 @@ export default class Collection {
             return false;
         }
     } //fn
-    /**take its own aoo(arr of obj not aoo class) and not the this.data */
     setPropertyAll(property, value) {
         let arr = [];
         this.data.forEach(e => {
             e.setProperty(property, value);
         });
+        return true;
     }
     setRandom() {
         this.data.forEach(e => {
