@@ -7,11 +7,10 @@ collection.useRandomIds = false;
 let sortOrder=1;
 for (let index = 1; index < 11; index++) {
 
-    // const item = {};
-    // item.id = Math.ceil(Math.random()*9999);
-    // item.sortOrder = sortOrder++;
-    // collection.read(item);
-    collection.add();
+    const item = {};
+    item.id = Math.ceil(Math.random()*9999);
+    item.sortOrder = sortOrder++;
+    collection.read(item);
     }    
 
 console.log('collection :>> ', collection);

@@ -1,7 +1,7 @@
 "use strict";
 import CollectionItem from "./CollectionItem.js";
-import ICollection from "../interfaces/ICollection.js";
-import ICollectionItem from "../interfaces/ICollectionItem.js";
+import ICollection from "./ICollection.js";
+import ICollectionItem from "./ICollectionItem.js";
 
 /**
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
@@ -10,21 +10,16 @@ import ICollectionItem from "../interfaces/ICollectionItem.js";
 //.......................................
 export default class Collection implements ICollection{
 
-public useRandomIds:boolean = false;
-public data:ICollectionItem[]=[];
-
+public useRandomIds:boolean = true;
 private idCounter:number=1;
 private sortOrderCounter:number= 1;
 
+public data:ICollectionItem[]=[];
 
 constructor(data:CollectionItem[]=[]) {
 this.data = data; //the aoo = an array not an object
 }
-/**
- * This takes just the parentId and assigns that to the parentId prop. It gives its own id and incresement the id. If we do not want the id to incremenet we shd use read()
- * it should always return a collection Item INTERFACE and never an error.
- * @param parentId 
- */
+
 public add(parentId:string|number|null=null):CollectionItem {
 const collectionItem = new CollectionItem();
 collectionItem.id = this.newId();
@@ -236,7 +231,7 @@ public setRandom():void {
     });
 }
 //..............................................
-public delete(itemOrId:number|string|CollectionItem):void {
+public delete(itemOrId:number|CollectionItem):void {
 
     if (typeof itemOrId == 'object') {
         this.data = this.data.filter(i => i.id !== itemOrId.id);

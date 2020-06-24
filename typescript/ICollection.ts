@@ -11,8 +11,10 @@ data:ICollectionItem[];
 /////////////////////////////////////////////////////
 add(parentId:string|number|null):CollectionItem;
 read(item:CollectionItem):CollectionItem|false;
+
 indexToId(index:number):number|string;
 idToIndex(id:string|number):number|null;
+
 isFirst(id:string|number):boolean;
 getFirst():ICollectionItem;
 getLast():ICollectionItem;

@@ -7,12 +7,17 @@ import CollectionItem from "./CollectionItem.js";
 //.......................................
 export default class Collection {
     constructor(data = []) {
-        this.useRandomIds = true;
+        this.useRandomIds = false;
+        this.data = [];
         this.idCounter = 1;
         this.sortOrderCounter = 1;
-        this.data = [];
         this.data = data; //the aoo = an array not an object
     }
+    /**
+     * This takes just the parentId and assigns that to the parentId prop. It gives its own id and incresement the id. If we do not want the id to incremenet we shd use read()
+     * it should always return a collection Item INTERFACE and never an error.
+     * @param parentId
+     */
     add(parentId = null) {
         const collectionItem = new CollectionItem();
         collectionItem.id = this.newId();

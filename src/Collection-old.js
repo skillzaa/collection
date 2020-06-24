@@ -1,67 +1,18 @@
-'use strict';
-
-///this collection item is node--waoooo
-class CollectionItem {
-    //---------------------------------------------
-    constructor() {
-        this.parentId = null;
-        this.id = null;
-        this.sortOrder = 0;
-        this.title = "New Node";
-        this.selected = false;
-        this.highlighted = false;
-        this.internalGap = 2;
-        this.folded = false;
-        this.titleCapitalization = "first";
-        this.details = "";
-        this.border = 2;
-        this.borderRadius = 15;
-        this.padding = 8;
-        this.fontSize = 22;
-        this.fontColor = "#343a40";
-        this.width = null; //to be filled in later
-        this.height = null; //to be filled in later
-        this.minWidth = 50;
-        this.minHeight = 50;
-        this.fontFamily = "Impact";
-        this.overWriteStyle = false;
-        this.x = 0;
-        this.y = 0;
-        this.titleX = null; //to be filled in later
-        this.titleY = null; ////to be filled in later
-        this.childLess = null; ////to be filled in later
-        this.ccw = null; ////to be filled in later--importantay
-    } //const        
-    setProperty(prop, value) {
-        if (typeof prop !== "string") {
-            return false;
-        }
-        this[prop] = value;
-        return true;
-    }
-    getProperty(prop) {
-        return this[prop];
-    }
-} //class ends
-
+"use strict";
+import CollectionItem from "./CollectionItem.js";
 /**
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
  */
 //.......................................
 //.......................................
-class Collection {
+export default class Collection {
     constructor(data = []) {
-        this.useRandomIds = false;
-        this.data = [];
+        this.useRandomIds = true;
         this.idCounter = 1;
         this.sortOrderCounter = 1;
+        this.data = [];
         this.data = data; //the aoo = an array not an object
     }
-    /**
-     * This takes just the parentId and assigns that to the parentId prop. It gives its own id and incresement the id. If we do not want the id to incremenet we shd use read()
-     * it should always return a collection Item INTERFACE and never an error.
-     * @param parentId
-     */
     add(parentId = null) {
         const collectionItem = new CollectionItem();
         collectionItem.id = this.newId();
@@ -265,6 +216,7 @@ class Collection {
     } //fn
     /**take its own aoo(arr of obj not aoo class) and not the this.data */
     setPropertyAll(property, value) {
+        let arr = [];
         this.data.forEach(e => {
             e.setProperty(property, value);
         });
@@ -316,6 +268,4 @@ class Collection {
         }
         return false;
     }
-} //class ends
-
-module.exports = Collection;
+} //class ends    
