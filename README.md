@@ -25,36 +25,51 @@
 - data:ICollectionItem[] : This is the main data (array of objects) that this class is managing. This data is also directly accessable.
 
 ## Methods
-- **add**(parentId:string|number|null):CollectionItem;
-- **read**(item:CollectionItem):CollectionItem|false;
-- **indexToId**(index:number):number|string;
-- **idToIndex**(id:string|number):number|null;
-- **isFirst**(id:string|number):boolean;
-- **getFirst**():ICollectionItem;
-- **getLast**():ICollectionItem;
-- **isLast**(id:string|number):boolean;
-
-- **search**(prop:string, value:string|number):CollectionItem[]|[];
-- **searchFirst**(prop:string, value:any):CollectionItem|boolean;
-
-- **searchAnd**(prop1:string, value1:any, prop2:string,value2:any):CollectionItem[]|[]; 
-- **searchAndFirst**(prop1:string, value1:any, prop2:string, value2:any):boolean | CollectionItem;
-
-
-- **find**(id:string|number):boolean|ICollectionItem;
-- **findChildren**(parentItemId:string|number):ICollectionItem[]|[];
-        
-- **sort**(property:string,overWrite:boolean):ICollectionItem[]; 
-- **sortDesc**(property:string, overWrite:boolean):ICollectionItem[];
+add(parentId?: string | number): CollectionItem;
+---
+read(item: ICollectionItem): ICollectionItem | false;
+---
+indexToId(index: number): number | string;
+---
+idToIndex(id: string | number): number | null;
+---
+isFirst(id: string | number): boolean;
+---
+getFirst(): ICollectionItem;
+---
+getLast(): ICollectionItem;
+---
+isLast(id: string | number): boolean;
+---
+searchFirst(prop: keyof CollectionItem, value: any): CollectionItem | boolean;
+---
+search(prop?: string, value?: string | number): CollectionItem[] | [];
+---
+searchAndFirst(prop1: string, value1: any, prop2: string, value2: any): boolean | CollectionItem;
+---
+searchAnd(prop1: string, value1: any, prop2: string, value2: any): CollectionItem[] | [];
+---
+find(id: string | number): boolean | ICollectionItem;
+---
+findChildren(parentItemId: string | number): ICollectionItem[] | [];
+---
+sort(property?: string, overWrite?: boolean): ICollectionItem[];
+---
+sortDesc(property: string, overWrite?: boolean): ICollectionItem[];
+---
+push(a: ICollectionItem): boolean;
+---
+get length(): number;
+---
+getPrevByIndex(item: ICollectionItem): ICollectionItem | boolean;
+---
+getNextByIndex(item: CollectionItem): CollectionItem | boolean;
+---
+setPropertyAll(property: keyof CollectionItem, value: any): boolean;
+---
+setRandom(): void;
+---
+delete(itemOrId: number | string | CollectionItem): void;
+---
     
-- **push**(a:CollectionItem):CollectionItem[];
-    
-- **length**():number;
-    
-- **getPrevByIndex**(item:CollectionItem):CollectionItem|boolean;
-- **setPropertyAll**(property:string, value:any):CollectionItem|boolean;
-    
-- **setRandom**():void;
-    
-- **delete**(itemOrId:number|CollectionItem):void;
     

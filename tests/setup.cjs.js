@@ -1,5 +1,6 @@
 //import Collection from './src/Collection.js';
-const Col = require('./collection.cjs');
+const Col = 
+require('../dist/collection.cjs.0.1');
 
 function setup(){
     const collection = new Col();

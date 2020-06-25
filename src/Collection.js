@@ -13,11 +13,11 @@ export default class Collection {
         this.sortOrderCounter = 1;
         this.data = data; //the aoo = an array not an object
     }
-/**
- * This takes just the parentId and assigns that to the parentId prop. It gives its own id and incresement the id. If we do not want the id to incremenet we shd use read()
- * it should always return a collection Item INTERFACE and never an error.
- * @param parentId
- */
+    /**
+     * This takes just the parentId and assigns that to the parentId prop. It gives its own id and incresement the id. If we do not want the id to incremenet we shd use read()
+     * it should always return a collection Item INTERFACE and never an error.
+     * @param parentId
+     */
     add(parentId = "") {
         const collectionItem = new CollectionItem();
         collectionItem.id = this.newId();
