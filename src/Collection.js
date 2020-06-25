@@ -1,6 +1,5 @@
 "use strict";
 import CollectionItem from "./CollectionItem.js";
-
 /**
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
  */
@@ -8,8 +7,9 @@ import CollectionItem from "./CollectionItem.js";
 //.......................................
 export default class Collection {
     constructor(data = []) {
-//        this.useRandomIds = true;
-this.
+        //depricated--not being used internally;
+        this.useRandomIds = true;
+        this.debugMode = true;
         this.data = [];
         this.idCounter = 1;
         this.sortOrderCounter = 1;
@@ -30,13 +30,11 @@ this.
         this.data.push(collectionItem);
         return collectionItem;
     }
-    read(item) {
+    insert(item) {
         if (typeof item.id === "undefined") {
             return false;
         }
-        if (this.idTypeMatch(item.id) !== true) {
-            return false;
-        }
+        //if(this.idTypeMatch(item.id) !== true){return false;}
         if (this.isIdUnique(item.id) !== true) {
             return false;
         }
@@ -243,7 +241,7 @@ this.
         }
     }
     newId() {
-        if (this.useRandomIds === false) {
+        if (this.debugMode === true) {
             return this.idCounter++;
         }
         else {
@@ -265,15 +263,15 @@ this.
         }
         return true;
     }
-    idTypeMatch(id) {
-        if (typeof id === "string" && this.useRandomIds == true) {
-            return true;
-        }
-        if (typeof id === "number" && this.useRandomIds == false) {
-            return true;
-        }
-        return false;
-    }
+    // private idTypeMatch(id:string|number){    
+    // if(typeof id === "string" && this.useRandomIds == true){
+    //     return true
+    // }
+    // if(typeof id === "number" && this.useRandomIds == false){
+    //     return true
+    // }
+    // return false;
+    // }
     blankCopy() {
         return new CollectionItem();
     }

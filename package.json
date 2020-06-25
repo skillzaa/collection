@@ -12,11 +12,11 @@
     "rollup-plugin-terser": "^6.1.0"
   },
   "scripts": {
-    "buildTest": "rollup -c rollup.config.two.js",
+    "buildTest": "rollup -c rollup.config.t.js",
     "buildDist": "rollup -c rollup.config.dist.js",
     "dev": "rollup -c -w",
     "test": "jest ",
-    "pretest": "npm run buildTest"
+    "pretest": "npm run buildTest && npm run buildDist"
   },
   "files": [
     "dist"

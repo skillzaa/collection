@@ -12,7 +12,7 @@ const item = {
     sortOrder: 55
 }    
 
-const justAdded = collection.read(item);
+const justAdded = collection.insert(item);
 tester.testProp(33,"sortOrder",55);
 tester.testProp(33,"id",justAdded.id);
 
@@ -28,7 +28,7 @@ const item = {
     sortOrder: 55
 }    
 
-const justAdded = collection.read(item);
+const justAdded = collection.insert(item);
 test('justAdded',()=>{expect(justAdded).toBeFalsy()});        
 
 
@@ -38,7 +38,7 @@ const item = {
     id:4,
     sortOrder: 55
 }    
-const justAdded = collection.read(item);
+const justAdded = collection.insert(item);
 test('justAdded',()=>{expect(justAdded).toBeFalsy()});        
 
 });

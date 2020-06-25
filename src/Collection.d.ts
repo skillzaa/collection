@@ -6,6 +6,7 @@ import ICollectionItem from "./ICollectionItem.js";
  */
 export default class Collection implements ICollection {
     useRandomIds: boolean;
+    debugMode: boolean;
     data: ICollectionItem[];
     private idCounter;
     private sortOrderCounter;
@@ -16,7 +17,7 @@ export default class Collection implements ICollection {
      * @param parentId
      */
     add(parentId?: string | number): CollectionItem;
-    read(item: ICollectionItem): ICollectionItem | false;
+    insert(item: ICollectionItem): ICollectionItem | false;
     indexToId(index: number): number | string;
     idToIndex(id: string | number): number | null;
     isFirst(id: string | number): boolean;
@@ -39,9 +40,8 @@ export default class Collection implements ICollection {
     setPropertyAll(property: keyof CollectionItem, value: any): boolean;
     setRandom(): void;
     delete(itemOrId: number | string | CollectionItem): void;
-    private newId;
+    protected newId(): string | number;
     private uuid;
     protected isIdUnique(id: string | number): boolean;
-    private idTypeMatch;
     protected blankCopy(): CollectionItem;
 }

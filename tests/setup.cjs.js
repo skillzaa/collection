@@ -1,4 +1,4 @@
-//import Collection from './src/Collection.js';
+
 const Col = 
 require('../dist/collection.cjs.0.1');
 

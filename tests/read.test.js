@@ -1,15 +1,17 @@
 const Collection = require('./collection.cjs');
 const collection = new Collection();
 //................................
-collection.useRandomIds = false;
+//collection.useRandomIds = false;
+collection.debugMode = true;
 //................................
 describe("collection",()=>{
 let sortOrder=1;
 for (let index = 1; index < 11; index++) {
     const item = {};
-    item.id = Math.ceil(Math.random()*9999);
+    //--this can break when ever generate same id
+    item.id = Math.ceil(Math.random()*999999999);
     item.sortOrder = sortOrder++;
-    collection.read(item);
+    collection.insert(item);
     }    
 
 const len = collection.length;    

@@ -9,8 +9,9 @@ import ICollectionItem from "./ICollectionItem.js";
 //.......................................
 //.......................................
 export default class Collection implements ICollection{
-
+//depricated--not being used internally;
 public useRandomIds:boolean = true;
+public debugMode:boolean = true;
 public data:ICollectionItem[]=[];
 
 private idCounter:number=1;
@@ -34,9 +35,9 @@ collectionItem.createdAt = new Date().getTime();
 this.data.push(collectionItem);
 return collectionItem;
 }
-public read(item:ICollectionItem):ICollectionItem|false {
+public insert(item:ICollectionItem):ICollectionItem|false {
 if(typeof item.id==="undefined"){return false;}    
-if(this.idTypeMatch(item.id) !== true){return false;}
+//if(this.idTypeMatch(item.id) !== true){return false;}
 if(this.isIdUnique(item.id) !== true){return false;}
 //if(typeof item.parentId !== ){return false;}
 //---set the values also
@@ -245,8 +246,8 @@ public delete(itemOrId:number|string|CollectionItem):void {
         this.data = this.data.filter(i => {i.id !== itemOrId});
     }
 }
-private newId() {
-    if (this.useRandomIds === false) {  
+protected newId() {
+    if (this.debugMode === true) {  
         return  this.idCounter++;
     } else {
         return this.uuid();
@@ -267,15 +268,15 @@ for (let idx = 0; idx < this.data.length; idx++) {
 }    
 return true;
 }
-private idTypeMatch(id:string|number){    
-if(typeof id === "string" && this.useRandomIds == true){
-    return true
-}
-if(typeof id === "number" && this.useRandomIds == false){
-    return true
-}
-return false;
-}
+// private idTypeMatch(id:string|number){    
+// if(typeof id === "string" && this.useRandomIds == true){
+//     return true
+// }
+// if(typeof id === "number" && this.useRandomIds == false){
+//     return true
+// }
+// return false;
+// }
 protected blankCopy():CollectionItem{
 return new CollectionItem();
   }
