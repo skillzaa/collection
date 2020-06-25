@@ -43,4 +43,5 @@ export default class Collection implements ICollection {
     private uuid;
     protected isIdUnique(id: string | number): boolean;
     private idTypeMatch;
+    protected blankCopy(): CollectionItem;
 }

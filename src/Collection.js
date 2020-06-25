@@ -1,5 +1,6 @@
 "use strict";
 import CollectionItem from "./CollectionItem.js";
+
 /**
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
  */
@@ -7,7 +8,8 @@ import CollectionItem from "./CollectionItem.js";
 //.......................................
 export default class Collection {
     constructor(data = []) {
-        this.useRandomIds = true;
+//        this.useRandomIds = true;
+this.
         this.data = [];
         this.idCounter = 1;
         this.sortOrderCounter = 1;
@@ -271,5 +273,8 @@ export default class Collection {
             return true;
         }
         return false;
+    }
+    blankCopy() {
+        return new CollectionItem();
     }
 } //class ends    

@@ -16,7 +16,6 @@ public data:ICollectionItem[]=[];
 private idCounter:number=1;
 private sortOrderCounter:number= 1;
 
-
 constructor(data:ICollectionItem[]=[]) {
 this.data = data; //the aoo = an array not an object
 }
@@ -277,5 +276,7 @@ if(typeof id === "number" && this.useRandomIds == false){
 }
 return false;
 }
-
+protected blankCopy():CollectionItem{
+return new CollectionItem();
+  }
 } //class ends    

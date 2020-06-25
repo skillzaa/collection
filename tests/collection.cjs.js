@@ -317,6 +317,9 @@ class Collection {
         }
         return false;
     }
+    blankCopy() {
+        return new CollectionItem();
+    }
 } //class ends
 
 module.exports = Collection;
