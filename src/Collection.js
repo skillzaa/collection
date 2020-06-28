@@ -1,5 +1,6 @@
 "use strict";
 import CollectionItem from "./CollectionItem.js";
+import ReturnObject from "./ReturnObject.js";
 /**
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
  */
@@ -32,13 +33,17 @@ export default class Collection {
     }
     insert(item) {
         if (typeof item.id === "undefined") {
-            return false;
+            const r = new ReturnObject();
+            r.addMessage("The id is undefined. Id is must to insert an object using insert method.");
+            r.errorNumber = 1;
+            return r;
         }
-        //if(this.idTypeMatch(item.id) !== true){return false;}
         if (this.isIdUnique(item.id) !== true) {
-            return false;
+            const r = new ReturnObject();
+            r.addMessage("The id provided already exists in the system. Please provide a unique id");
+            r.errorNumber = 2;
+            return r;
         }
-        //if(typeof item.parentId !== ){return false;}
         //---set the values also
         if ((typeof item.sortOrder == "undefined") || (typeof item.sortOrder !== "number")) {
             item.sortOrder = this.sortOrderCounter++; //imp    
@@ -49,19 +54,30 @@ export default class Collection {
         this.data.push(item);
         return item;
     }
-    //.......................abs
     indexToId(index) {
+        if (index >= this.data.length) {
+            const r = new ReturnObject();
+            r.addMessage("The index is larger than the number of items in the collection.");
+            r.errorNumber = 3;
+            return r;
+        }
         let item = this.data[index];
         return item.id;
     }
     idToIndex(id) {
         //--this foreach is working since has arrow function????  
-        let index = null;
+        let index;
         this.data.forEach((e, idx) => {
             if (e.id == id) {
                 index = idx;
             }
         });
+        if (typeof index !== "number" || typeof index !== "string") {
+            const r = new ReturnObject();
+            r.addMessage("Could not find the index. Most probably the id was not found.");
+            r.errorNumber = 3;
+            return r;
+        }
         return index;
     }
     isFirst(id) {
@@ -263,15 +279,6 @@ export default class Collection {
         }
         return true;
     }
-    // private idTypeMatch(id:string|number){    
-    // if(typeof id === "string" && this.useRandomIds == true){
-    //     return true
-    // }
-    // if(typeof id === "number" && this.useRandomIds == false){
-    //     return true
-    // }
-    // return false;
-    // }
     blankCopy() {
         return new CollectionItem();
     }

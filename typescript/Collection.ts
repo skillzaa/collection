@@ -2,6 +2,7 @@
 import CollectionItem from "./CollectionItem.js";
 import ICollection from "./ICollection.js";
 import ICollectionItem from "./ICollectionItem.js";
+import ReturnObject from "./ReturnObject.js";
 
 /**
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
@@ -35,11 +36,19 @@ collectionItem.createdAt = new Date().getTime();
 this.data.push(collectionItem);
 return collectionItem;
 }
-public insert(item:ICollectionItem):ICollectionItem|false {
-if(typeof item.id==="undefined"){return false;}    
-//if(this.idTypeMatch(item.id) !== true){return false;}
-if(this.isIdUnique(item.id) !== true){return false;}
-//if(typeof item.parentId !== ){return false;}
+public insert(item:ICollectionItem):ICollectionItem|ReturnObject {
+if(typeof item.id==="undefined"){
+    const r = new ReturnObject();
+    r.addMessage("The id is undefined. Id is must to insert an object using insert method.");
+    r.errorNumber=1;
+    return r;
+}    
+if(this.isIdUnique(item.id) !== true){
+    const r = new ReturnObject();
+    r.addMessage("The id provided already exists in the system. Please provide a unique id");
+    r.errorNumber=2;
+    return r;
+}
 //---set the values also
 if((typeof item.sortOrder == "undefined") || (typeof item.sortOrder !== "number") ){
 item.sortOrder = this.sortOrderCounter++; //imp    
@@ -50,20 +59,31 @@ item.parentId = 0; //imp
 this.data.push(item);
 return item;
 }
-//.......................abs
 
-indexToId(index:number):number|string {
+indexToId(index:number):number|string|ReturnObject {
+if(index >= this.data.length){
+    const r = new ReturnObject();
+    r.addMessage("The index is larger than the number of items in the collection.");
+    r.errorNumber=3;
+    return r;
+}    
 let item = this.data[index];
 return item.id;
 }
-idToIndex(id:string|number):number|null {
+idToIndex(id:string|number):number|ReturnObject {
     //--this foreach is working since has arrow function????  
-    let index = null;
+    let index;
     this.data.forEach((e, idx) => {
         if (e.id == id) {
             index = idx;
         }
     });
+if(typeof index !== "number" || typeof index !== "string"){
+    const r = new ReturnObject();
+    r.addMessage("Could not find the index. Most probably the id was not found.");
+    r.errorNumber=3;
+    return r;
+}
     return index;
 }
 isFirst(id:string|number):boolean{
@@ -239,13 +259,14 @@ public setRandom():void {
 //..............................................
 public delete(itemOrId:number|string|CollectionItem):void {
 
-    if (typeof itemOrId == 'object') {
-        this.data = this.data.filter(i => i.id !== itemOrId.id);
-    }
-    else if (typeof itemOrId == 'number') {
-        this.data = this.data.filter(i => {i.id !== itemOrId});
-    }
+if (typeof itemOrId == 'object') {
+    this.data = this.data.filter(i => i.id !== itemOrId.id);
 }
+else if (typeof itemOrId == 'number') {
+    this.data = this.data.filter(i => {i.id !== itemOrId});
+}
+}
+
 protected newId() {
     if (this.debugMode === true) {  
         return  this.idCounter++;
@@ -253,7 +274,7 @@ protected newId() {
         return this.uuid();
     }
 }
-private uuid() {
+protected uuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
@@ -268,16 +289,9 @@ for (let idx = 0; idx < this.data.length; idx++) {
 }    
 return true;
 }
-// private idTypeMatch(id:string|number){    
-// if(typeof id === "string" && this.useRandomIds == true){
-//     return true
-// }
-// if(typeof id === "number" && this.useRandomIds == false){
-//     return true
-// }
-// return false;
-// }
+
 protected blankCopy():CollectionItem{
 return new CollectionItem();
   }
+
 } //class ends    

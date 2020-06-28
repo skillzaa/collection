@@ -4,11 +4,11 @@ const collection = setup();
 
 
 const item = {
-    id:33,
+    id:3,
     sortOrder: 55
 }    
 
-const res = collection.read(item);
+const res = collection.insert(item);
 
 console.log('collection :>> ', res);
 console.log('collection :>> ', collection);

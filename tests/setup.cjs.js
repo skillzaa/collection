@@ -1,6 +1,6 @@
 
 const Col = 
-require('../dist/collection.cjs.0.1');
+require('../public/collection.cjs');
 
 function setup(){
     const collection = new Col();
