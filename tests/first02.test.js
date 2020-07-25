@@ -24,9 +24,11 @@ collection.data.forEach(d => {
 });    
 
 describe("sort",()=>{
-//.....................noe sort
+//.random is the name of the property that we just added
+//--we sorted the collection based on random property and that has over-written the internal AOO
 collection.sort("random");   
 const firstItem = collection.getFirst();
+//get the first random value before entering loop
 var previousRandom = firstItem.random;
 //---------------------------------------
     collection.data.forEach(c => {
@@ -85,6 +87,6 @@ const res = resElm.oddOrEven;
 const tf = (res === false || "changed")? true : false;   
 test('just false and changed',()=>{expect(tf).toBeTruthy()});          
 });
-//..................................................
+//..
 });
 

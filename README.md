@@ -11,27 +11,27 @@
 ## How it Works
 ##### When we create a collection object its creates an empty array and we are provided with a number of methods to use.
 ##### The array of Objects is accessable throught **collection.data**.
-##### We use **add** method to add new items into this collection and use **read** method to load previously created items (saved in database etc)
+##### We use **add** method to add new items into this collection and use **insert** method to load previously created items (e.g saved in database etc)
 ##### Every item has these 4 properties:
 - id: (compulasary) for a new item the id will be assigned by the class however old items can bring their own ids however the id of an old item that is being **read** (loaded into) the collection its id should be unique.
-- sortOrder: Every item has sort order for sorting. The collection object has **sort** and **sortDesc** methods to sirt the collection based on any numerical property.
+- sortOrder: Every item has sort order for sorting. The collection object has **sort** and **sortDesc** methods to sort the collection based on any numerical property.
 - createdAt: Time of creation of the item (not must).
 - parentId : Though the items are independent but if the user wants he can add parentIds there by converting this flat list into a tree structure.
 
 ## The API
 ----------------------
 ### Global Varialbes
-- useRandomIds:boolean : This switch between using numberical sequential ids (mean 1,2,3...) or unique string based ids. For testing always make useRandomIds to false and for production code turn it true.
-- data:ICollectionItem[] : This is the main data (array of objects) that this class is managing. This data is also directly accessable.
+- debugMode:boolean : This switch between using numberical sequential ids (mean 1,2,3...) or unique string based ids. For testing always make debugMode to true and for production code turn it false.
+- data:ICollectionItem[] : This is the main data (array of objects) being managed by this class.ICollectionItem refers to the interface.
 
 ## Methods
-add(parentId?: string | number): CollectionItem;
+add(parentId?: string | number): ICollectionItem;
 ---
-insert(item: ICollectionItem): ICollectionItem | false;
+insert(item:ICollectionItem):ICollectionItem|IReturnObject;
 ---
-indexToId(index: number): number | string;
+indexToId(index: number): number|string|IReturnObject;
 ---
-idToIndex(id: string | number): number | null;
+idToIndex(id: string | number): number | IReturnObject;
 ---
 isFirst(id: string | number): boolean;
 ---

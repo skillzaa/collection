@@ -39,7 +39,7 @@ collectionItem.createdAt = new Date().getTime();
 this.data.push(collectionItem);
 return collectionItem;
 }
-public insert(item:ICollectionItem):ICollectionItem|ReturnObject {
+public insert(item:ICollectionItem):ICollectionItem|IReturnObject {
 if(typeof item.id==="undefined"){
     const r = new ReturnObject();
     r.addMessage("The id is undefined. Id is must to insert an object using insert method.");
@@ -63,7 +63,7 @@ this.data.push(item);
 return item;
 }
 
-indexToId(index:number):number|string|ReturnObject {
+indexToId(index:number):number|string|IReturnObject {
 if(index >= this.data.length){
     const r = new ReturnObject();
     r.addMessage("The index is larger than the number of items in the collection.");
@@ -126,7 +126,7 @@ search(prop:string = "id", value:string|number = 0):CollectionItem[]|[] {
     this.data.forEach(e => {
         if (e[prop] == value) {
             final.push(e);
-        }
+        }   
     });
     return final;
 } //
