@@ -7,9 +7,8 @@ import ReturnObject from "./ReturnObject.js";
 //.......................................
 export default class Collection {
     constructor(data = []) {
-        //depricated--not being used internally;
-        this.useRandomIds = true;
-        this.debugMode = true;
+        //If debugMode == true we use NON-random id as 1,2,3,4 else we always use string based uuids.
+        this.debugMode = true; //By default True
         this.data = [];
         this.idCounter = 1;
         this.sortOrderCounter = 1;
@@ -21,6 +20,7 @@ export default class Collection {
      * @param parentId
      */
     add(parentId = "") {
+        //--To create an actual obj we have to use the class and not the interface    
         const collectionItem = new CollectionItem();
         collectionItem.id = this.newId();
         collectionItem.sortOrder = this.sortOrderCounter++; //imp

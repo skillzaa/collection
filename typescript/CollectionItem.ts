@@ -1,4 +1,4 @@
-import ICollectionItem from './ICollectionItem.js';
+import ICollectionItem from './interfaces/ICollectionItem.js';
 ///this collection item is node--waoooo
 export default class CollectionItem implements ICollectionItem{
 parentId :number|string;    

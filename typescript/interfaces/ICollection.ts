@@ -1,6 +1,6 @@
 import ICollectionItem from './ICollectionItem';
-import CollectionItem from './CollectionItem';
-import ReturnObject from "./ReturnObject.js";
+import CollectionItem from '../CollectionItem';
+import ReturnObject from "../ReturnObject.js";
 /**
  */
 export default interface ICollection {

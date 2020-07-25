@@ -1,12 +1,19 @@
 export default class ReturnObject {
     constructor() {
-        this.message = [];
+        this.messages = [];
         this.success = false;
         this.value = null;
-        this.errorNumber = 0;
+        this.errorNumber = 0; //0 means all correct no errors;
         /////////////////////////////////    
     }
-    addMessage(msg = "") {
-        this.message.push(msg);
+    addMessage(msg) {
+        this.messages.push(msg);
+        return true;
+    }
+    getMessageString() {
+        return this.messages.join();
+    }
+    getMessages() {
+        return this.messages;
     }
 }

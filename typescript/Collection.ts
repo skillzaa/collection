@@ -1,17 +1,20 @@
 "use strict";
 import CollectionItem from "./CollectionItem.js";
-import ICollection from "./ICollection.js";
-import ICollectionItem from "./ICollectionItem.js";
+import ICollection from "./interfaces/ICollection.js";
+
+import ICollectionItem from "./interfaces/ICollectionItem.js";
+
 import ReturnObject from "./ReturnObject.js";
+import IReturnObject from "./interfaces/IReturnObject.js";
 
 /**
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
  */
 //.......................................
 export default class Collection implements ICollection{
-//depricated--not being used internally;
-public useRandomIds:boolean = true;
-public debugMode:boolean = true;
+//If debugMode == true we use NON-random id as 1,2,3,4 else we always use string based uuids.
+public debugMode:boolean = true; //By default True
+
 public data:ICollectionItem[]=[];
 
 private idCounter:number=1;
@@ -25,8 +28,9 @@ this.data = data; //the aoo = an array not an object
  * it should always return a collection Item INTERFACE and never an error.
  * @param parentId 
  */
-public add(parentId:string|number=""):CollectionItem {
-const collectionItem:CollectionItem = new CollectionItem();
+public add(parentId:string|number=""):ICollectionItem {
+//--To create an actual obj we have to use the class and not the interface    
+const collectionItem:ICollectionItem = new CollectionItem();
 collectionItem.id = this.newId();
 collectionItem.sortOrder = this.sortOrderCounter++; //imp
 //-----------------
