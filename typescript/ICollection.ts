@@ -9,8 +9,8 @@ debugMode:boolean;
 data:ICollectionItem[];
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
-add(parentId:string|number):CollectionItem;
-read(item:ICollectionItem):ICollectionItem|ReturnObject;
+add(parentId:string|number):ICollectionItem;
+insert(item:ICollectionItem):ICollectionItem|ReturnObject;
 
 indexToId(index:number):string|number|ReturnObject;
 idToIndex(id:string|number):number|ReturnObject;
@@ -34,10 +34,13 @@ sort(property:string,overWrite:boolean):ICollectionItem[]|boolean;
 sortDesc(property:string, overWrite:boolean):ICollectionItem[]|boolean;
     
 push(a:CollectionItem):CollectionItem[]|boolean;
+
+//--This is how we mark a getter
+readonly length: number;
+
     
-length():number;
-    
-getPrevByIndex(item:CollectionItem):CollectionItem|boolean;
+getPrevByIndex(item:ICollectionItem):ICollectionItem|boolean;
+
 setPropertyAll(property:keyof CollectionItem, value:any):CollectionItem|boolean;
     
 setRandom():void;
