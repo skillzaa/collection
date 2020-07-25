@@ -6,5 +6,4 @@ export default {
 	  file: 'public/index.js',
 	  format: 'es',
 	}
-
   };

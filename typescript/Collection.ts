@@ -8,7 +8,6 @@ import ReturnObject from "./ReturnObject.js";
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
  */
 //.......................................
-//.......................................
 export default class Collection implements ICollection{
 //depricated--not being used internally;
 public useRandomIds:boolean = true;
@@ -289,9 +288,7 @@ for (let idx = 0; idx < this.data.length; idx++) {
 }    
 return true;
 }
-
 protected blankCopy():CollectionItem{
 return new CollectionItem();
   }
-
 } //class ends    

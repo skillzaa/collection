@@ -3,8 +3,7 @@ export default class ResponseObject {
         this.messages = [];
         this.success = false;
         this.returnData = false;
-        ///--------------------------------    
-    }
+    }///--------------------------------    
     add(msg) {
         this.messages.push(msg);
     }

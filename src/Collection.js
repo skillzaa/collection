@@ -5,7 +5,6 @@ import ReturnObject from "./ReturnObject.js";
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
  */
 //.......................................
-//.......................................
 export default class Collection {
     constructor(data = []) {
         //depricated--not being used internally;
