@@ -1,9 +1,9 @@
-import { terser } from "rollup-plugin-terser";
+//import { terser } from "rollup-plugin-terser";
 export default {
 	input: 'src/Collection.js',
-	plugins: [terser()],
+//	plugins: [terser()],
 	output: {
-	  file: 'public/index.js',
+	  file: 'public/collection.js',
 	  format: 'es',
 	}
   };

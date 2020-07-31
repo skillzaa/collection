@@ -1,0 +1,1 @@
+{"version":3,"file":"ReturnObject.d.ts","sourceRoot":"","sources":["../typescript/ReturnObject.ts"],"names":[],"mappings":"AAAA,OAAO,aAAa,MAAM,+BAA+B,CAAC;AAE1D,MAAM,CAAC,OAAO,OAAO,YAAa,YAAW,aAAa;IAC1D,QAAQ,EAAE,MAAM,EAAE,CAAI;IACtB,OAAO,EAAC,OAAO,CAAO;IACtB,KAAK,EAAC,GAAG,CAAM;IACf,WAAW,EAAC,MAAM,CAAG;IAEd,UAAU,CAAC,GAAG,EAAC,MAAM;IAIrB,gBAAgB;IAGvB,WAAW;CAIV"}
