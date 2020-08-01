@@ -3,7 +3,7 @@ export default {
 	input: 'src/Collection.js',
 	plugins: [terser()],
 	output: {
-	  file: 'public/collection.cjs.js',
+	  file: 'public/collectioncjs.js',
 	  format: 'cjs',
 	}
 	

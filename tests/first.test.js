@@ -1,9 +1,9 @@
-const Collection = require('./collection.cjs');
+const Collection = require('../public/collectioncjs');
 const collection = new Collection();
 //................................
-collection.debugMode = false;
+collection.useRandomIds = false;
 //................................
-describe("collection",()=>{
+describe("Check length",()=>{
 for (let index = 1; index < 11; index++) {
         collection.add();
         const len = collection.length;

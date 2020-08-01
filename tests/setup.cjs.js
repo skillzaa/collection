@@ -1,6 +1,4 @@
-
-const Col = 
-require('../public/collectioncjs');
+const Col = require('../public/collectioncjs');
 
 function setup(){
     const collection = new Col();

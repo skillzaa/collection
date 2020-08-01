@@ -1,27 +1,20 @@
-const Collection = require('./collection.cjs');
-const collection = new Collection();
+const setup = require('./setup.cjs');
+const collection = setup();
 //................................
 collection.useRandomIds = false;
-//................................
-describe("collection",()=>{
-for (let index = 1; index < 11; index++) {
-        collection.add();
-        const len = collection.length;
-        test(`length:${index}`,()=>{expect(len).toBe(index)});        
-    }    
-});    
-//......................................
-describe("find",()=>{
+
+describe("find each item by id using FIND",()=>{
 for (let index = 1; index < 11; index++) {
 //we can check all except 0 since there i no id=0    
     const itemFound = collection.find(index);
-    const itemIndex = collection.idToIndex(itemFound.id);
-    const itemByIndex = collection.data[itemIndex];
-
+    const itemFoundIndex = collection.idToIndex(itemFound.id);
+    const itemByIndex = collection.data[itemFoundIndex];
+console.log("itemByIndex",itemByIndex);
+console.log("index",index);
     test(`find: ${index}`,()=>{expect(itemFound.id).toEqual(itemByIndex.id)});        
 }    
 });
-
+/*
 describe("findChildren",()=>{
     const ch1 = collection.find(1);
     ch1.parentId = 8;
@@ -47,3 +40,5 @@ describe("get property",()=>{
     });         
 
 });
+
+*/
