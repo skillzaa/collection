@@ -1,19 +1,19 @@
 "use strict";
 import CollectionItem from "./CollectionItem.js";
-import ICollection from "./interfaces/ICollection.js";
-
 import ICollectionItem from "./interfaces/ICollectionItem.js";
+
+import ICollection from "./interfaces/ICollection.js";
 
 import ReturnObject from "./ReturnObject.js";
 import IReturnObject from "./interfaces/IReturnObject.js";
 
-/**
+/**      
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
  */
 //.......................................
 export default class Collection implements ICollection{
 //If debugMode == true we use NON-random id as 1,2,3,4 else we always use string based uuids.
-public debugMode:boolean = true; //By default True
+public useRandomIds:boolean = false; //By default True
 
 public data:ICollectionItem[]=[];
 
@@ -42,7 +42,7 @@ return collectionItem;
 public insert(item:ICollectionItem):ICollectionItem|IReturnObject {
 if(typeof item.id==="undefined"){
     const r = new ReturnObject();
-    r.addMessage("The id is undefined. Id is must to insert an object using insert method.");
+    r.addMessage("A valid id is required.");
     r.errorNumber=1;
     return r;
 }    
@@ -271,7 +271,7 @@ else if (typeof itemOrId == 'number') {
 }
 
 protected newId() {
-    if (this.debugMode === true) {  
+    if (this.useRandomIds === false) {  
         return  this.idCounter++;
     } else {
         return this.uuid();

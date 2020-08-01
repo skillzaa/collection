@@ -1,14 +1,12 @@
-import setup from './tests/setup.es.js';
-const collection = setup();
+import Collection from './public/collection.js';
+const collection = new Collection();  
 
 
-
-const item = {
-    id:3,
-    sortOrder: 55
-}    
-
-const res = collection.insert(item);
-
-console.log('collection :>> ', res);
-console.log('collection :>> ', collection);
+collection.useRandomIds = false;
+for (let index = 0; index < 11; index++) {
+  //    const random = Math.floor(Math.random()*9999);
+  //  collection.add(random);
+    collection.add();
+    
+}
+console.log(collection.data);

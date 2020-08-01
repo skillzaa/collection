@@ -8,7 +8,7 @@ import ReturnObject from "./ReturnObject.js";
 export default class Collection {
     constructor(data = []) {
         //If debugMode == true we use NON-random id as 1,2,3,4 else we always use string based uuids.
-        this.debugMode = true; //By default True
+        this.useRandomIds = false; //By default True
         this.data = [];
         this.idCounter = 1;
         this.sortOrderCounter = 1;
@@ -33,7 +33,7 @@ export default class Collection {
     insert(item) {
         if (typeof item.id === "undefined") {
             const r = new ReturnObject();
-            r.addMessage("The id is undefined. Id is must to insert an object using insert method.");
+            r.addMessage("A valid id is required.");
             r.errorNumber = 1;
             return r;
         }
@@ -256,7 +256,7 @@ export default class Collection {
         }
     }
     newId() {
-        if (this.debugMode === true) {
+        if (this.useRandomIds === false) {
             return this.idCounter++;
         }
         else {

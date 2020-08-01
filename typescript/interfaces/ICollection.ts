@@ -4,7 +4,7 @@ import ReturnObject from "../ReturnObject.js";
 /**
  */
 export default interface ICollection {
-debugMode:boolean;
+useRandomIds:boolean;
 data:ICollectionItem[];
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////

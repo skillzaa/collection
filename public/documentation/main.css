@@ -1,0 +1,19 @@
+body {
+    background-color: aliceblue;
+}
+ol{
+    line-height: 2rem;;
+}
+ol li{
+  font-size: 1.5rem;  
+  padding:2px;
+    margin:2px;
+}
+
+ol p{
+    background-color: antiquewhite;
+    padding:4px;
+    margin:4px;
+    border-radius: 4px;
+    font-size: 1.1rem;
+}

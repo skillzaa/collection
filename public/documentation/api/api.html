@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The API</title>
+<link rel="stylesheet" href="../main.css">    
+</head>
+<body>
+    <h1>The API</h1>
+    <h2>Public Variables</h2>
+    <ol>
+        <li><b>debugMode: boolean;</b></li>
+        <li><b>data: ICollectionItem[];</b></li>
+    </ol>        
+
+<h2>Methods</h2>
+
+<ol>   
+<li><b>add(parentId?: string | number): ICollectionItem;</b></li>
+<!-- <p>some text in between</p> -->
+<li><b>insert(item: ICollectionItem): ICollectionItem | IReturnObject; </b></li>
+<li><b>indexToId(index: number): number | string | IReturnObject;</b></li>
+<li><b>idToIndex(id: string | number): number | ReturnObject;</b></li>
+<li><b>isFirst(id: string | number): boolean;</b></li>
+<li><b>getFirst(): ICollectionItem;</b></li>
+<li><b>getLast(): ICollectionItem;</b></li>
+<li><b>isLast(id: string | number): boolean;</b></li>
+
+<li><b>searchFirst(prop: keyof CollectionItem, value: any): CollectionItem | boolean;</b></li>
+<li><b>search(prop?: string, value?: string | number): CollectionItem[] | [];</b></li>
+<li><b>searchAndFirst(prop1: string, value1: any, prop2: string, value2: any): boolean | CollectionItem;</b></li>
+<li><b>searchAnd(prop1: string, value1: any, prop2: string, value2: any): CollectionItem[] | [];</b></li>
+<li><b>find(id: string | number): boolean | ICollectionItem;</b></li>
+<li><b>findChildren(parentItemId: string | number): ICollectionItem[] | [];</b></li>
+<li><b>sort(property?: string, overWrite?: boolean): ICollectionItem[];</b></li>
+<li><b>sortDesc(property: string, overWrite?: boolean): ICollectionItem[];</b></li>
+
+<li><b>push(a: ICollectionItem): boolean;
+get length(): number;</b></li>
+
+<li><b>getPrevByIndex(item: ICollectionItem): ICollectionItem | boolean;</b></li>
+<li><b>getNextByIndex(item: CollectionItem): CollectionItem | boolean;</b></li>
+<li><b>setPropertyAll(property: keyof CollectionItem, value: any): boolean;</b></li>
+<li><b>setRandom(): void;</b></li>
+
+<li><b>delete(itemOrId: number | string | CollectionItem): void;</b></li>
+
+</ol>
+
+</body>
+</html>
