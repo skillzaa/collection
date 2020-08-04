@@ -1,69 +1,52 @@
 "use strict";
+import CollectionBase from "./CollectionBase.js";
+import ICollection from "./interfaces/ICollection.js";
 import CollectionItem from "./CollectionItem.js";
 import ICollectionItem from "./interfaces/ICollectionItem.js";
-
-import ICollection from "./interfaces/ICollection.js";
-
 import ReturnObject from "./ReturnObject.js";
-import IReturnObject from "./interfaces/IReturnObject.js";
+
 
 /**      
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
  */
 //.......................................
-export default class Collection implements ICollection{
+export default class Collection  extends CollectionBase implements ICollection{
 //If debugMode == true we use NON-random id as 1,2,3,4 else we always use string based uuids.
 public useRandomIds:boolean = false; //By default True
 
 public data:ICollectionItem[]=[];
 
-private idCounter:number=1;
-private sortOrderCounter:number= 1;
-
 constructor(data:ICollectionItem[]=[]) {
-this.data = data; //the aoo = an array not an object
+super(data);    
 }
-/**
- * This takes just the parentId and assigns that to the parentId prop. It gives its own id and incresement the id. If we do not want the id to incremenet we shd use read()
- * it should always return a collection Item INTERFACE and never an error.
- * @param parentId 
- */
-public add(parentId:string=""):ICollectionItem {
-//--To create an actual obj we have to use the class and not the interface    
+
+public add(parentId:string="0"):ICollectionItem {
 const collectionItem:ICollectionItem = new CollectionItem();
 collectionItem.id = this.newId();
 collectionItem.sortOrder = this.sortOrderCounter++; //imp
-//-----------------
-collectionItem.parentId = parentId;
 collectionItem.createdAt = new Date().getTime();
+//.........
+collectionItem.parentId = String(parentId);
 this.data.push(collectionItem);
 return collectionItem;
 }
-public insert(item:ICollectionItem):ICollectionItem|IReturnObject {
-if(typeof item.id==="undefined"){
-    const r = new ReturnObject();
-    r.addMessage("A valid id is required.");
-    r.errorNumber=1;
-    return r;
-}    
-if(this.isIdUnique(item.id) !== true){
-    const r = new ReturnObject();
-    r.addMessage("The id provided already exists in the system. Please provide a unique id");
-    r.errorNumber=2;
-    return r;
-}
+public insert(item:ICollectionItem):ICollectionItem|ReturnObject {
+
+if(typeof item.id==="undefined"){return this.response(1,"A valid id is required");}    
+
+if(this.isIdUnique(item.id) !== true){return this.response(2,"The id provided already exists in the system. Please provide a unique id");}
 //---set the values also
 if((typeof item.sortOrder == "undefined") || (typeof item.sortOrder !== "number") ){
 item.sortOrder = this.sortOrderCounter++; //imp    
 }
 if((typeof item.parentId == "undefined")) {
-item.parentId = 0; //imp    
+item.parentId = "0"; //imp    
 }
 this.data.push(item);
 return item;
 }
 
-indexToId(index:number):number|string|IReturnObject {
+indexToId(index:number):number|string|ReturnObject {
 if(index >= this.data.length){
     const r = new ReturnObject();
     r.addMessage("The index is larger than the number of items in the collection.");
@@ -73,7 +56,7 @@ if(index >= this.data.length){
 let item = this.data[index];
 return item.id;
 }
-idToIndex(id:string|number):number|ReturnObject {
+public idToIndex(id:string):number|ReturnObject {
     //--this foreach is working since has arrow function????  
     let index;
     this.data.forEach((e, idx) => {
@@ -82,14 +65,11 @@ idToIndex(id:string|number):number|ReturnObject {
         }
     });
 if(typeof index !== "number" || typeof index !== "string"){
-    const r = new ReturnObject();
-    r.addMessage("Could not find the index. Most probably the id was not found.");
-    r.errorNumber=3;
-    return r;
+    return this.response(3,"Could not find the index. Most probably the id was not found");    
 }
     return index;
 }
-isFirst(id:string|number):boolean{
+isFirst(id:string):boolean{
     if (this.data[0].id == id) {
         return true;
     }
@@ -112,7 +92,7 @@ isLast(id:string|number):boolean {
     }
 } //getItem
 /**Just send back the first one  */
-searchFirst(prop:keyof CollectionItem, value:any):CollectionItem|boolean {
+searchFirst(prop:keyof CollectionItem, value:string|number):CollectionItem|boolean {
     for (let idx = 0; idx < this.data.length; idx++) {
         if (this.data[idx][prop] == value) {
             return this.data[idx];
@@ -271,29 +251,5 @@ else if (typeof itemOrId == 'string') {
 }
 }
 
-protected newId():string {
-    if (this.useRandomIds === false) {  
-        return  String(this.idCounter++);
-    } else {
-        return this.uuid();
-    }
-}
-protected uuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-}
-//--------------------------
-protected isIdUnique(id:string|number){    
-for (let idx = 0; idx < this.data.length; idx++) {
-    if(this.data[idx].id == id){
-        return false;
-    }
-}    
-return true;
-}
-protected blankCopy():CollectionItem{
-return new CollectionItem();
-  }
+
 } //class end

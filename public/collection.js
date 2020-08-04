@@ -68,50 +68,100 @@ class ReturnObject {
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
  */
 //.......................................
-class Collection {
+class CollectionBase {
     constructor(data = []) {
+        //If useRandomIds == true we use NON-random id as "1","2","3","4" else we always use string based uuids.
+        this.idCounter = 1;
+        this.sortOrderCounter = 1;
+        this.useRandomIds = false; //By default True
+        this.data = [];
+        this.data = data; //the aoo = an array not an object
+    }
+    //---------PROTECTED METHODS
+    //-----------------------------------
+    newId() {
+        if (this.useRandomIds === false) {
+            return String(this.idCounter++);
+        }
+        else {
+            return this.uuid();
+        }
+    }
+    uuid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+    isIdUnique(id) {
+        for (let idx = 0; idx < this.data.length; idx++) {
+            if (this.data[idx].id == id) {
+                return false;
+            }
+        }
+        return true;
+    }
+    blankCopy() {
+        return new CollectionItem();
+    }
+    validateParentId(parentId) {
+        if (typeof parentId !== "string" || parentId == "") {
+            return "0";
+        }
+        else {
+            return parentId;
+        }
+    }
+    response(errorNumber = 0, message = "", success = false) {
+        const r = new ReturnObject();
+        r.addMessage(message);
+        r.errorNumber = errorNumber;
+        r.success = success;
+        return r;
+    }
+} //class ends
+
+/**
+ *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
+ */
+//.......................................
+class Collection extends CollectionBase {
+    constructor(data = []) {
+        super(data);
         //If debugMode == true we use NON-random id as 1,2,3,4 else we always use string based uuids.
         this.useRandomIds = false; //By default True
         this.data = [];
-        this.idCounter = 1;
-        this.sortOrderCounter = 1;
-        this.data = data; //the aoo = an array not an object
     }
     /**
      * This takes just the parentId and assigns that to the parentId prop. It gives its own id and incresement the id. If we do not want the id to incremenet we shd use read()
      * it should always return a collection Item INTERFACE and never an error.
+     * Also if no parent id then it is "0" which means not assigned.. rahter than using null
      * @param parentId
      */
-    add(parentId = "") {
+    add(parentId = "0") {
         //--To create an actual obj we have to use the class and not the interface    
         const collectionItem = new CollectionItem();
         collectionItem.id = this.newId();
         collectionItem.sortOrder = this.sortOrderCounter++; //imp
-        //-----------------
-        collectionItem.parentId = parentId;
+        //-----------------||||||||---
+        collectionItem.parentId = String(parentId);
         collectionItem.createdAt = new Date().getTime();
         this.data.push(collectionItem);
         return collectionItem;
     }
     insert(item) {
         if (typeof item.id === "undefined") {
-            const r = new ReturnObject();
-            r.addMessage("A valid id is required.");
-            r.errorNumber = 1;
-            return r;
+            return this.response(1, "A valid id is required");
         }
         if (this.isIdUnique(item.id) !== true) {
-            const r = new ReturnObject();
-            r.addMessage("The id provided already exists in the system. Please provide a unique id");
-            r.errorNumber = 2;
-            return r;
+            return this.response(2, "The id provided already exists in the system. Please provide a unique id");
         }
         //---set the values also
         if ((typeof item.sortOrder == "undefined") || (typeof item.sortOrder !== "number")) {
             item.sortOrder = this.sortOrderCounter++; //imp    
         }
         if ((typeof item.parentId == "undefined")) {
-            item.parentId = 0; //imp    
+            item.parentId = "0"; //imp    
         }
         this.data.push(item);
         return item;
@@ -135,10 +185,7 @@ class Collection {
             }
         });
         if (typeof index !== "number" || typeof index !== "string") {
-            const r = new ReturnObject();
-            r.addMessage("Could not find the index. Most probably the id was not found.");
-            r.errorNumber = 3;
-            return r;
+            return this.response(3, "Could not find the index. Most probably the id was not found");
         }
         return index;
     }
@@ -317,32 +364,6 @@ class Collection {
         else if (typeof itemOrId == 'string') {
             this.data = this.data.filter(i => { i.id !== itemOrId; });
         }
-    }
-    newId() {
-        if (this.useRandomIds === false) {
-            return String(this.idCounter++);
-        }
-        else {
-            return this.uuid();
-        }
-    }
-    uuid() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    }
-    //--------------------------
-    isIdUnique(id) {
-        for (let idx = 0; idx < this.data.length; idx++) {
-            if (this.data[idx].id == id) {
-                return false;
-            }
-        }
-        return true;
-    }
-    blankCopy() {
-        return new CollectionItem();
     }
 } //class end
 

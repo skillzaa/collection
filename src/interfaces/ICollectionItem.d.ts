@@ -3,7 +3,7 @@ export default interface ICollectionItem {
     parentId: string;
     sortOrder: number;
     createdAt: number;
-    setProperty(prop: string, value: any): boolean;
+    setProperty(prop: string, value: string | number): boolean;
     getProperty(prop: string): any;
 }
 //# sourceMappingURL=ICollectionItem.d.ts.map

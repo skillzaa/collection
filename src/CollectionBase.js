@@ -1,5 +1,6 @@
 "use strict";
 import CollectionItem from "./CollectionItem.js";
+import ReturnObject from "./ReturnObject.js";
 /**
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
  */
@@ -13,6 +14,7 @@ export default class CollectionBase {
         this.data = [];
         this.data = data; //the aoo = an array not an object
     }
+    //---------PROTECTED METHODS
     //-----------------------------------
     newId() {
         if (this.useRandomIds === false) {
@@ -28,7 +30,6 @@ export default class CollectionBase {
             return v.toString(16);
         });
     }
-    //--------------------------
     isIdUnique(id) {
         for (let idx = 0; idx < this.data.length; idx++) {
             if (this.data[idx].id == id) {
@@ -47,5 +48,12 @@ export default class CollectionBase {
         else {
             return parentId;
         }
+    }
+    response(errorNumber = 0, message = "", success = false) {
+        const r = new ReturnObject();
+        r.addMessage(message);
+        r.errorNumber = errorNumber;
+        r.success = success;
+        return r;
     }
 } //class ends    

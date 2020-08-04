@@ -4,6 +4,6 @@ parentId : string;
 sortOrder :number;    
 createdAt :number;
 
-setProperty(prop:string,value:any):boolean;
+setProperty(prop:string,value:string|number):boolean;
 getProperty(prop:string):any;
 }

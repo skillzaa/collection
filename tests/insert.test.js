@@ -1,28 +1,22 @@
-const setup = require('./setup.cjs');
+const Collection = require('../public/collectioncjs');
 const Tester = require('./tester.cjs');
-const collection = setup();
+
+const collection = new Collection();
+collection.useRandomIds = false;
 const tester = new Tester(collection);
 
-describe("collection",()=>{
 const item = {
-    id:33,
-    sortOrder: 55
-}    
-const justAdded = collection.insert(item);
-tester.testProp(33,"sortOrder",55);
-tester.testProp(33,"id",justAdded.id);
+id:"0",
+parentId:"0",
+sortOrder : "",
+createdAt : ""
+};
+
+describe("collection",()=>{
+    item.id = "234";    
+collection.insert(item); //string parent id
+tester.testLen(1);
+tester.testProp(1,"sortOrder",1);
+tester.testProp(1,"id","234");
 
 });
-/*
-describe("collection",()=>{
-const item = {
-    id:3,
-    sortOrder: 55
-}    
-const justAdded = collection.insert(item);
-test('=',()=>{expect(justAdded.success).toBeFalsy()});        
-test('=',()=>{expect(justAdded.errorNumber).toBe(2)});        
-});
-
-
-*/

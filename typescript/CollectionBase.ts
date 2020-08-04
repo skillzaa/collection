@@ -2,7 +2,9 @@
 import CollectionItem from "./CollectionItem.js";
 import ICollectionItem from "./interfaces/ICollectionItem.js";
 
-import ICollection from "./interfaces/ICollection.js";
+
+import ReturnObject from "./ReturnObject.js";
+
 /**      
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
  */
@@ -19,6 +21,7 @@ constructor(data:ICollectionItem[]=[]) {
 this.data = data; //the aoo = an array not an object
 }
 
+//---------PROTECTED METHODS
 //-----------------------------------
 protected newId():string {
     if (this.useRandomIds === false) {  
@@ -33,7 +36,6 @@ protected uuid() {
         return v.toString(16);
     });
 }
-//--------------------------
 protected isIdUnique(id:string|number){    
 for (let idx = 0; idx < this.data.length; idx++) {
     if(this.data[idx].id == id){
@@ -52,4 +54,12 @@ if(typeof parentId !== "string" || parentId==""){
     return parentId;
 }
   }
+protected response(errorNumber=0,message="",success=false){
+    const r = new ReturnObject();
+    r.addMessage(message);
+    r.errorNumber = errorNumber;
+    r.success = success;
+    return r;
+}
+    
 } //class ends    
