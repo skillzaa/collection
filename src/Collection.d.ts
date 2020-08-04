@@ -12,7 +12,7 @@ export default class Collection extends CollectionBase implements ICollection {
     constructor(data?: ICollectionItem[]);
     add(parentId?: string): ICollectionItem;
     insert(item: ICollectionItem): ICollectionItem | ReturnObject;
-    indexToId(index: number): number | string | ReturnObject;
+    indexToId(index: number): string | ReturnObject;
     idToIndex(id: string): number | ReturnObject;
     isFirst(id: string): boolean;
     getFirst(): ICollectionItem;

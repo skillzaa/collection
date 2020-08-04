@@ -53,29 +53,27 @@ this.data.push(item);
 return item;
 }
 
-indexToId(index:number):number|string|ReturnObject {
+public indexToId(index:number):string|ReturnObject {
 if(index >= this.data.length){
-    const r = new ReturnObject();
-    r.addMessage("The index is larger than the number of items in the collection.");
-    r.errorNumber=3;
-    return r;
+    return this.response(1,"The index is larger than the number of items in the collection");        
 }    
 let item = this.data[index];
-return item.id;
+return String(item.id);
 }
+
 public idToIndex(id:string):number|ReturnObject {
-    //--this foreach is working since has arrow function????  
-    let index;
+    let index= null;
     this.data.forEach((e, idx) => {
         if (e.id == id) {
             index = idx;
         }
     });
-if(typeof index !== "number" || typeof index !== "string"){
+if(typeof index === null || typeof index !== "string"){
     return this.response(3,"Could not find the index. Most probably the id was not found");    
 }
     return index;
-}
+}//...............abs
+
 isFirst(id:string):boolean{
     if (this.data[0].id == id) {
         return true;
