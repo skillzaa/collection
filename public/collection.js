@@ -119,6 +119,15 @@ class CollectionBase {
         r.success = success;
         return r;
     }
+    hasValue(value) {
+        if ((typeof value == "undefined") ||
+            (value == "") || (value == null)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 } //class ends
 
 /**
@@ -132,35 +141,34 @@ class Collection extends CollectionBase {
         this.useRandomIds = false; //By default True
         this.data = [];
     }
-    /**
-     * This takes just the parentId and assigns that to the parentId prop. It gives its own id and incresement the id. If we do not want the id to incremenet we shd use read()
-     * it should always return a collection Item INTERFACE and never an error.
-     * Also if no parent id then it is "0" which means not assigned.. rahter than using null
-     * @param parentId
-     */
     add(parentId = "0") {
-        //--To create an actual obj we have to use the class and not the interface    
         const collectionItem = new CollectionItem();
         collectionItem.id = this.newId();
         collectionItem.sortOrder = this.sortOrderCounter++; //imp
-        //-----------------||||||||---
-        collectionItem.parentId = String(parentId);
         collectionItem.createdAt = new Date().getTime();
+        //.........
+        collectionItem.parentId = String(parentId);
         this.data.push(collectionItem);
         return collectionItem;
     }
     insert(item) {
-        if (typeof item.id === "undefined") {
+        if (this.hasValue(item) === false) {
+            return this.response(3, "A valid collection item is required");
+        }
+        if (this.hasValue(item.id) === false) {
             return this.response(1, "A valid id is required");
         }
         if (this.isIdUnique(item.id) !== true) {
             return this.response(2, "The id provided already exists in the system. Please provide a unique id");
         }
-        //---set the values also
-        if ((typeof item.sortOrder == "undefined") || (typeof item.sortOrder !== "number")) {
+        if (typeof item.id !== "string") {
+            item.id = String(item.id);
+        }
+        //...sort order
+        if ((this.hasValue(item.sortOrder) === false) || (typeof item.sortOrder !== "number")) {
             item.sortOrder = this.sortOrderCounter++; //imp    
         }
-        if ((typeof item.parentId == "undefined")) {
+        if (this.hasValue(item.parentId) === false) {
             item.parentId = "0"; //imp    
         }
         this.data.push(item);

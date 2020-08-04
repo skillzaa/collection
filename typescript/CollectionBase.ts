@@ -61,5 +61,12 @@ protected response(errorNumber=0,message="",success=false){
     r.success = success;
     return r;
 }
-    
+protected hasValue(value:any):boolean{
+if( (typeof value == "undefined") ||
+    (value == "") || (value == null) ){
+    return false;
+}else{
+    return true;}
+
+}    
 } //class ends    

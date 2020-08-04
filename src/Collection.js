@@ -24,17 +24,23 @@ export default class Collection extends CollectionBase {
         return collectionItem;
     }
     insert(item) {
-        if (typeof item.id === "undefined") {
+        if (this.hasValue(item) === false) {
+            return this.response(3, "A valid collection item is required");
+        }
+        if (this.hasValue(item.id) === false) {
             return this.response(1, "A valid id is required");
         }
         if (this.isIdUnique(item.id) !== true) {
             return this.response(2, "The id provided already exists in the system. Please provide a unique id");
         }
-        //---set the values also
-        if ((typeof item.sortOrder == "undefined") || (typeof item.sortOrder !== "number")) {
+        if (typeof item.id !== "string") {
+            item.id = String(item.id);
+        }
+        //...sort order
+        if ((this.hasValue(item.sortOrder) === false) || (typeof item.sortOrder !== "number")) {
             item.sortOrder = this.sortOrderCounter++; //imp    
         }
-        if ((typeof item.parentId == "undefined")) {
+        if (this.hasValue(item.parentId) === false) {
             item.parentId = "0"; //imp    
         }
         this.data.push(item);

@@ -56,4 +56,13 @@ export default class CollectionBase {
         r.success = success;
         return r;
     }
+    hasValue(value) {
+        if ((typeof value == "undefined") ||
+            (value == "") || (value == null)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 } //class ends    

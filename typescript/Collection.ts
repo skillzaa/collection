@@ -13,7 +13,6 @@ import ReturnObject from "./ReturnObject.js";
 export default class Collection  extends CollectionBase implements ICollection{
 //If debugMode == true we use NON-random id as 1,2,3,4 else we always use string based uuids.
 public useRandomIds:boolean = false; //By default True
-
 public data:ICollectionItem[]=[];
 
 constructor(data:ICollectionItem[]=[]) {
@@ -30,16 +29,24 @@ collectionItem.parentId = String(parentId);
 this.data.push(collectionItem);
 return collectionItem;
 }
+
 public insert(item:ICollectionItem):ICollectionItem|ReturnObject {
 
-if(typeof item.id==="undefined"){return this.response(1,"A valid id is required");}    
+if(this.hasValue(item)===false)
+{return this.response(3,"A valid collection item is required");}    
+if(this.hasValue(item.id)===false)
+{return this.response(1,"A valid id is required");}    
 
 if(this.isIdUnique(item.id) !== true){return this.response(2,"The id provided already exists in the system. Please provide a unique id");}
-//---set the values also
-if((typeof item.sortOrder == "undefined") || (typeof item.sortOrder !== "number") ){
+
+if(typeof item.id !== "string"){
+    item.id = String(item.id);
+}
+//...sort order
+if((this.hasValue(item.sortOrder)===false) || (typeof item.sortOrder !== "number") ){
 item.sortOrder = this.sortOrderCounter++; //imp    
 }
-if((typeof item.parentId == "undefined")) {
+if(this.hasValue(item.parentId)===false) {
 item.parentId = "0"; //imp    
 }
 this.data.push(item);
