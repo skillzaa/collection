@@ -2,9 +2,9 @@
 class CollectionItem {
     //---------------------------------------------
     constructor() {
-        this.parentId = 0;
+        this.parentId = "0";
         //No item can have id=0, this is just for newly created items who have not yet been given id yet. Consider it as null.
-        this.id = 0;
+        this.id = "0";
         this.sortOrder = 0;
         this.createdAt = 0;
         this.title = "New Node";
@@ -196,7 +196,7 @@ class Collection {
         const final = [];
         for (let idx = 0; idx < this.data.length; idx++) {
             const e = this.data[idx];
-            if ((e[prop1] == value1) && (e[prop2] == value2)) {
+            if ((e[String(prop1)] == value1) && (e[prop2] == value2)) {
                 final.push(e);
             }
         }
@@ -307,19 +307,20 @@ class Collection {
         this.data.forEach(e => {
             e.setProperty("random", Math.ceil(Math.random() * 9999));
         });
+        return true;
     }
     //..............................................
     delete(itemOrId) {
         if (typeof itemOrId == 'object') {
             this.data = this.data.filter(i => i.id !== itemOrId.id);
         }
-        else if (typeof itemOrId == 'number') {
+        else if (typeof itemOrId == 'string') {
             this.data = this.data.filter(i => { i.id !== itemOrId; });
         }
     }
     newId() {
         if (this.useRandomIds === false) {
-            return this.idCounter++;
+            return String(this.idCounter++);
         }
         else {
             return this.uuid();
@@ -343,6 +344,6 @@ class Collection {
     blankCopy() {
         return new CollectionItem();
     }
-} //class ends
+} //class end
 
 export default Collection;

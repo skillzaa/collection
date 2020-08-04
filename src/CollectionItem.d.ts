@@ -1,7 +1,7 @@
 import ICollectionItem from './interfaces/ICollectionItem.js';
 export default class CollectionItem implements ICollectionItem {
-    parentId: number | string;
-    id: number | string;
+    parentId: string;
+    id: string;
     sortOrder: number;
     createdAt: number;
     title: string;

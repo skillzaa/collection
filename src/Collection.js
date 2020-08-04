@@ -133,7 +133,7 @@ export default class Collection {
         const final = [];
         for (let idx = 0; idx < this.data.length; idx++) {
             const e = this.data[idx];
-            if ((e[prop1] == value1) && (e[prop2] == value2)) {
+            if ((e[String(prop1)] == value1) && (e[prop2] == value2)) {
                 final.push(e);
             }
         }
@@ -245,19 +245,20 @@ export default class Collection {
         this.data.forEach(e => {
             e.setProperty("random", Math.ceil(Math.random() * 9999));
         });
+        return true;
     }
     //..............................................
     delete(itemOrId) {
         if (typeof itemOrId == 'object') {
             this.data = this.data.filter(i => i.id !== itemOrId.id);
         }
-        else if (typeof itemOrId == 'number') {
+        else if (typeof itemOrId == 'string') {
             this.data = this.data.filter(i => { i.id !== itemOrId; });
         }
     }
     newId() {
         if (this.useRandomIds === false) {
-            return this.idCounter++;
+            return String(this.idCounter++);
         }
         else {
             return this.uuid();
@@ -281,4 +282,4 @@ export default class Collection {
     blankCopy() {
         return new CollectionItem();
     }
-} //class ends    
+} //class end

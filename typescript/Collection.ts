@@ -28,7 +28,7 @@ this.data = data; //the aoo = an array not an object
  * it should always return a collection Item INTERFACE and never an error.
  * @param parentId 
  */
-public add(parentId:string|number=""):ICollectionItem {
+public add(parentId:string=""):ICollectionItem {
 //--To create an actual obj we have to use the class and not the interface    
 const collectionItem:ICollectionItem = new CollectionItem();
 collectionItem.id = this.newId();
@@ -140,11 +140,11 @@ searchAndFirst(prop1:string, value1:any, prop2:string, value2:any):boolean | Col
     }
     return false;
 } //
-searchAnd(prop1:string, value1:any, prop2:string, value2:any) :CollectionItem[]|[]{
-    const final:CollectionItem[]|[] = [];
+searchAnd(prop1:string, value1:string|number, prop2:string, value2:string|number) :CollectionItem[]{
+    const final:CollectionItem[] = [];
     for (let idx = 0; idx < this.data.length; idx++) {
         const e = this.data[idx];
-        if ((e[prop1] == value1) && (e[prop2] == value2)) {
+        if ((e[String(prop1)] == value1) && (e[prop2] == value2)) {
             final.push(e);
         }
     }
@@ -254,10 +254,11 @@ public setPropertyAll(property:keyof CollectionItem, value:any):boolean {
     });    
 return true;    
 }
-public setRandom():void {
+public setRandom():boolean {
     this.data.forEach(e => {
         e.setProperty("random",Math.ceil(Math.random()*9999));
     });
+return true;    
 }
 //..............................................
 public delete(itemOrId:number|string|CollectionItem):void {
@@ -265,14 +266,14 @@ public delete(itemOrId:number|string|CollectionItem):void {
 if (typeof itemOrId == 'object') {
     this.data = this.data.filter(i => i.id !== itemOrId.id);
 }
-else if (typeof itemOrId == 'number') {
+else if (typeof itemOrId == 'string') {
     this.data = this.data.filter(i => {i.id !== itemOrId});
 }
 }
 
-protected newId() {
+protected newId():string {
     if (this.useRandomIds === false) {  
-        return  this.idCounter++;
+        return  String(this.idCounter++);
     } else {
         return this.uuid();
     }
@@ -295,4 +296,4 @@ return true;
 protected blankCopy():CollectionItem{
 return new CollectionItem();
   }
-} //class ends    
+} //class end

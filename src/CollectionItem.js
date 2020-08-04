@@ -2,9 +2,9 @@
 export default class CollectionItem {
     //---------------------------------------------
     constructor() {
-        this.parentId = 0;
+        this.parentId = "0";
         //No item can have id=0, this is just for newly created items who have not yet been given id yet. Consider it as null.
-        this.id = 0;
+        this.id = "0";
         this.sortOrder = 0;
         this.createdAt = 0;
         this.title = "New Node";

@@ -1,12 +1,8 @@
-import Collection from './public/collection.js';
-const collection = new Collection();  
+import setup from './tests/setup.es.js';
 
+const collection = new setup();  
+//const ret  = collection.insert({"id":"2221"});
+const ret  = collection.insert({"id":"2221"});
 
-collection.useRandomIds = false;
-for (let index = 0; index < 11; index++) {
-  //    const random = Math.floor(Math.random()*9999);
-  //  collection.add(random);
-    collection.add();
-    
-}
-console.log(collection.data);
+ console.log(ret);
+ console.log(collection.data);

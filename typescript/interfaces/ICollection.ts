@@ -1,6 +1,6 @@
 import ICollectionItem from './ICollectionItem';
 import CollectionItem from '../CollectionItem';
-import ReturnObject from "../ReturnObject.js";
+
 /**
  */
 export default interface ICollection {
@@ -8,16 +8,16 @@ useRandomIds:boolean;
 data:ICollectionItem[];
 /////////////////////////////////////////////////////
 /////////////////////////////////////////////////////
-add(parentId:string|number):ICollectionItem;
-insert(item:ICollectionItem):ICollectionItem|ReturnObject;
+add(parentId:string):ICollectionItem;
+insert(item:ICollectionItem):ICollectionItem|string;
 
-indexToId(index:number):string|number|ReturnObject;
-idToIndex(id:string|number):number|ReturnObject;
+indexToId(index:number):string|number|string;
+idToIndex(id:string|number):number|string;
 
-isFirst(id:string|number):boolean|ReturnObject;
-getFirst():ICollectionItem|ReturnObject;
-getLast():ICollectionItem|ReturnObject;
-isLast(id:string|number):boolean|ReturnObject;
+isFirst(id:string|number):boolean|string;
+getFirst():ICollectionItem|string;
+getLast():ICollectionItem|string;
+isLast(id:string|number):boolean|string;
 
 search(prop:string, value:string|number):CollectionItem[]|boolean;
 searchFirst(prop:keyof CollectionItem, value:any):CollectionItem|boolean;
@@ -42,9 +42,9 @@ getPrevByIndex(item:ICollectionItem):ICollectionItem|boolean;
 
 setPropertyAll(property:keyof CollectionItem, value:any):CollectionItem|boolean;
     
-setRandom():void;
+setRandom():boolean;
     
-delete(itemOrId:number|CollectionItem):void;
+delete(itemOrId:string|CollectionItem):void;
     
 
 }
