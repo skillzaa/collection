@@ -53,16 +53,15 @@ export default class Collection extends CollectionBase {
         return String(item.id);
     }
     idToIndex(id) {
-        let index = null;
-        this.data.forEach((e, idx) => {
-            if (e.id == id) {
-                index = idx;
-            }
-        });
-        if (typeof index === null || typeof index !== "string") {
-            return this.response(3, "Could not find the index. Most probably the id was not found");
+        if (typeof id !== "string") {
+            id = String(id);
         }
-        return index;
+        for (let idx = 0; idx < this.data.length; idx++) {
+            if (this.data[idx].id == id) {
+                return idx;
+            }
+        }
+        return this.response(3, "Could not find the index. Most probably the id was not found");
     } //...............abs
     isFirst(id) {
         if (this.data[0].id == id) {
