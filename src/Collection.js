@@ -46,7 +46,9 @@ export default class Collection extends CollectionBase {
         return item;
     }
     indexToId(index) {
-        if (index >= this.data.length) {
+        if ((Number(index) >= this.data.length)
+            ||
+                (Number(index) < 0)) {
             return this.response(1, "The index is larger than the number of items in the collection");
         }
         let item = this.data[index];
