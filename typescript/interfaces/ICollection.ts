@@ -44,7 +44,7 @@ setPropertyAll(property:keyof CollectionItem, value:any):CollectionItem|boolean;
     
 setRandom():void;
     
-delete(itemOrId:number|CollectionItem):void;
+delete(itemOrId:string|ICollectionItem):ReturnObject;
     
 
 }

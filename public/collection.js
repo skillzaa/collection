@@ -44,10 +44,14 @@ class CollectionItem {
     }
 } //class ends
 
+/**
+The return object is not only for errors, if there is an error the success flag will tell us
+if (returnObject.success===true)......
+ */
 class ReturnObject {
     constructor() {
         this.messages = [];
-        this.success = false;
+        this.success = false; //bydefault its error
         this.value = null;
         this.errorNumber = 0; //0 means all correct no errors;
         /////////////////////////////////    
@@ -363,13 +367,45 @@ class Collection extends CollectionBase {
     }
     //..............................................
     delete(itemOrId) {
+        /**
+         * To Delete
+         * -if the itemOrId is not string ie id get the id out of it
+         * -the fn returns only ReturnOBject
+         **/
+        let theId;
         if (typeof itemOrId == 'object') {
-            this.data = this.data.filter(i => i.id !== itemOrId.id);
+            theId = String(itemOrId.id); //use string just for safety
         }
         else if (typeof itemOrId == 'string') {
-            this.data = this.data.filter(i => { i.id !== itemOrId; });
+            theId = itemOrId;
         }
-    }
+        else if (typeof itemOrId == 'number') {
+            theId = String(itemOrId);
+        }
+        else {
+            return this.response(1, "Wrong format of ID ", false);
+        }
+        //----get the element from the array before removing
+        const deletedElementIndex = this.idToIndex(theId);
+        if (typeof deletedElementIndex === "number") {
+            const deletedElement = this.data[deletedElementIndex];
+            ///----deletion statement
+            const newData = [];
+            for (let idx = 0; idx < this.data.length; idx++) {
+                if (this.data[idx].id !== theId) {
+                    newData.push(this.data[idx]);
+                }
+            }
+            this.data = newData;
+            const resp = this.response(0, "The deleted item is being returned in the value argument", true);
+            resp.value = deletedElement;
+            return resp;
+        }
+        else {
+            return this.response(2, "Could not retrieve index");
+        }
+        //---save the deleted elm for return;
+    } //delete end
 } //class end
 
 export default Collection;

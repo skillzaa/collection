@@ -2,7 +2,9 @@ import setup from './tests/setup.es.js';
 import Collection from './public/collection.js';
 
 const collection = setup();
-collection.useRandomIds = false;
+collection.useRandomIds = false;    
 
-const ret2 = collection.indexToId(-2);
-console.log('ret2 :>> ', ret2); 
+console.log('collection :>> ', collection); 
+
+const ret = collection.delete(2);
+console.log('ret :>> ', ret);

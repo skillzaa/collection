@@ -139,7 +139,7 @@ searchAnd(prop1:string, value1:string|number, prop2:string, value2:string|number
     return final;
 } //
 //------------------Batch 3
-find(id:string|number):boolean|ICollectionItem {
+find(id:string):boolean|ICollectionItem {
     let final:boolean|ICollectionItem = false;
     this.data.forEach(e => {
         if (e.id == id) {
@@ -249,15 +249,45 @@ public setRandom():boolean {
 return true;    
 }
 //..............................................
-public delete(itemOrId:number|string|CollectionItem):void {
-
+public delete(itemOrId:string|ICollectionItem):ReturnObject {
+/**
+ * To Delete
+ * -if the itemOrId is not string ie id get the id out of it
+ * -the fn returns only ReturnOBject
+ **/
+let theId:string;  
 if (typeof itemOrId == 'object') {
-    this.data = this.data.filter(i => i.id !== itemOrId.id);
+theId = String(itemOrId.id);//use string just for safety
+}else if (typeof itemOrId == 'string'){
+    theId = itemOrId;
+}else if (typeof itemOrId == 'number'){
+    theId = String(itemOrId);
+}else{
+    return this.response(1,"Wrong format of ID ",false);
 }
-else if (typeof itemOrId == 'string') {
-    this.data = this.data.filter(i => {i.id !== itemOrId});
+//----get the element from the array before removing
+const deletedElementIndex:number|ReturnObject = this.idToIndex(theId);
+if (typeof deletedElementIndex === "number"){
+    const deletedElement = this.data[deletedElementIndex];
+    ///----deletion statement
+    const newData = [];
+        for (let idx = 0; idx < this.data.length; idx++) {
+            if(this.data[idx].id !== theId){
+                newData.push(this.data[idx]);
+            }
+        }
+    
+        this.data = newData;
+    const resp = this.response(0,"The deleted item is being returned in the value argument",true);
+    resp.value = deletedElement;
+    return resp;
+
+}else{
+    return this.response(2,"Could not retrieve index");
 }
-}
+//---save the deleted elm for return;
+
+}//delete end
 
 
 } //class end

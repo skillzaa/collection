@@ -15,7 +15,22 @@ describe("indexToId",()=>{
    }     
 });
 
-
+describe("indexToId",()=>{    
+    const ret = collection.indexToId(500);
+    test(`error`,()=>{expect(ret.errorNumber).toBe(1)});
+    const ret2 = collection.indexToId(-2);
+    test(`error`,()=>{expect(ret2.errorNumber).toBe(1)});
+    ///--check all such cases 
+    ///wah +1
+    const ret3 = collection.indexToId(collection.data.length+1);
+    test(`error`,()=>{expect(ret3.errorNumber).toBe(1)});
+    ///wah -1
+    const ret4 = collection.indexToId(-11);
+    test(`error`,()=>{expect(ret4.errorNumber).toBe(1)});
+         
+    });
+    
+///////////////////////////////
 describe("idToIndex",()=>{    
 let theId = 1;
 for (let idx = 0; idx < collection.length; idx++) {
@@ -25,17 +40,13 @@ for (let idx = 0; idx < collection.length; idx++) {
 }     
 });
 
-describe("idToIndex",()=>{    
-const ret = collection.indexToId(500);
-test(`error`,()=>{expect(ret.errorNumber).toBe(1)});
-const ret2 = collection.indexToId(-2);
-test(`error`,()=>{expect(ret2.errorNumber).toBe(1)});
-///--check all such cases 
-///wah +1
-const ret3 = collection.indexToId(collection.data.length+1);
-test(`error`,()=>{expect(ret3.errorNumber).toBe(1)});
-///wah -1
-const ret4 = collection.indexToId(-11);
-test(`error`,()=>{expect(ret4.errorNumber).toBe(1)});
-     
+describe("send wrong ids",()=>{    
+const ret = collection.idToIndex("feedwws");
+test(`error`,()=>{expect(ret.errorNumber).toBe(3)});
+const ret1 = collection.idToIndex("2222243");
+test(`error`,()=>{expect(ret1.errorNumber).toBe(3)});
+
+const ret2 = collection.idToIndex(-2);
+test(`error`,()=>{expect(ret2.errorNumber).toBe(3)});
+
 });

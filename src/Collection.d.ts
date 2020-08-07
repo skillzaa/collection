@@ -23,7 +23,7 @@ export default class Collection extends CollectionBase implements ICollection {
     search(prop?: string, value?: string | number): CollectionItem[] | [];
     searchAndFirst(prop1: string, value1: any, prop2: string, value2: any): boolean | CollectionItem;
     searchAnd(prop1: string, value1: string | number, prop2: string, value2: string | number): CollectionItem[];
-    find(id: string | number): boolean | ICollectionItem;
+    find(id: string): boolean | ICollectionItem;
     findChildren(parentItemId: string | number): ICollectionItem[] | [];
     sort(property?: string, overWrite?: boolean): ICollectionItem[];
     sortDesc(property: string, overWrite?: boolean): ICollectionItem[];
@@ -33,6 +33,6 @@ export default class Collection extends CollectionBase implements ICollection {
     getNextByIndex(item: CollectionItem): CollectionItem | boolean;
     setPropertyAll(property: keyof CollectionItem, value: any): boolean;
     setRandom(): boolean;
-    delete(itemOrId: number | string | CollectionItem): void;
+    delete(itemOrId: string | ICollectionItem): ReturnObject;
 }
 //# sourceMappingURL=Collection.d.ts.map

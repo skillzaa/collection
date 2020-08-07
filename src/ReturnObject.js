@@ -1,7 +1,11 @@
+/**
+The return object is not only for errors, if there is an error the success flag will tell us
+if (returnObject.success===true)......
+ */
 export default class ReturnObject {
     constructor() {
         this.messages = [];
-        this.success = false;
+        this.success = false; //bydefault its error
         this.value = null;
         this.errorNumber = 0; //0 means all correct no errors;
         /////////////////////////////////    

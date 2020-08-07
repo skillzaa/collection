@@ -27,6 +27,6 @@ export default interface ICollection {
     getPrevByIndex(item: ICollectionItem): ICollectionItem | boolean;
     setPropertyAll(property: keyof CollectionItem, value: any): CollectionItem | boolean;
     setRandom(): void;
-    delete(itemOrId: number | CollectionItem): void;
+    delete(itemOrId: string | ICollectionItem): ReturnObject;
 }
 //# sourceMappingURL=ICollection.d.ts.map
