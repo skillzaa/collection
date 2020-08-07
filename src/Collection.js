@@ -5,6 +5,7 @@ import CollectionItem from "./CollectionItem.js";
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
  */
 //.......................................
+//implements ICollection --// on hold
 export default class Collection extends CollectionBase {
     constructor(data = []) {
         super(data);
