@@ -257,7 +257,7 @@ class Collection extends CollectionBase {
             }
         }
         return final;
-    } //
+    } //   
     //------------------Batch 3
     find(id) {
         let final = false;

@@ -137,9 +137,9 @@ searchAnd(prop1:string, value1:string|number, prop2:string, value2:string|number
         }
     }
     return final;
-} //
+} //   
 //------------------Batch 3
-find(id:string):boolean|ICollectionItem {
+find(id:string):ReturnObject {
     let final:boolean|ICollectionItem = false;
     this.data.forEach(e => {
         if (e.id == id) {

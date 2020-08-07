@@ -26,7 +26,7 @@ searchAnd(prop1:string, value1:any, prop2:string,value2:any):CollectionItem[]|bo
 searchAndFirst(prop1:string, value1:any, prop2:string, value2:any):CollectionItem|boolean;
 
 
-find(id:string|number):ICollectionItem|boolean;
+find(id:string|number):ReturnObject;
 findChildren(parentItemId:string|number):ICollectionItem[]|boolean;
         
 sort(property:string,overWrite:boolean):ICollectionItem[]|boolean; 
