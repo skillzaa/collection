@@ -9,9 +9,13 @@ collection.useRandomIds = false;
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
-collection.data.forEach(c => {
-  c.setProperty("oddOrEven",Math.random() >= 0.5)
-});
+for (let index = 0; index < collection.data.length; index++) {
+   if ( index % 2 == 0) {
+      collection.data[index].setProperty("oddOrEven",true);  
+   }else{
+      collection.data[index].setProperty("oddOrEven",false);  
+   }
+}
 console.log('collection :>> ', collection);
 
 
@@ -20,3 +24,13 @@ console.log('collection :>> ', collection);
 const res = collection.search("oddOrEven",true);
 console.log("res",res);
 
+//////////
+const trueValues = collection.search("oddOrEven",true);
+//--add a property "tag"
+trueValues.value.forEach(e => {
+    e.setProperty("tag", "this is true");
+});
+
+//--search based on true and tag
+const newArray = collection.searchAnd("oddOrEven",true,"tag","this is true");
+console.log('newArray :>> ', newArray);
