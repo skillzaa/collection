@@ -2,12 +2,21 @@ import setup from './tests/setup.es.js';
 
 const collection = setup();
 collection.useRandomIds = false;    
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+collection.data.forEach(c => {
+  c.setProperty("oddOrEven",Math.random() >= 0.5)
+});
+console.log('collection :>> ', collection);
 
-for (let idx = 0; idx < collection.length; idx++) {
-   const theId = collection.data[idx].id;
 
-   const ret = collection.indexToId(idx);
-   console.log("ret",ret);
-   //const theReturnedId= ret.value.id;
-   
-}     
+/////further 
+//...........................
+const res = collection.search("oddOrEven",true);
+console.log("res",res);
+

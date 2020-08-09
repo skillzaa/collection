@@ -18,20 +18,21 @@ export default class Collection extends CollectionBase {
     getLast(): ReturnObject;
     isLast(id: string | number): ReturnObject;
     /**Just send back the first one  */
-    searchFirst(prop: keyof CollectionItem, value: string | number): ReturnObject;
+    searchFirst(prop?: string, value?: string | number): ReturnObject;
     search(prop?: string, value?: string | number): ReturnObject;
-    searchAndFirst(prop1: string, value1: any, prop2: string, value2: any): ReturnObject;
     searchAnd(prop1: string, value1: string | number, prop2: string, value2: string | number): ReturnObject;
     find(id: string): ReturnObject;
     findChildren(parentItemId: string | number): ReturnObject;
     sort(property?: string, overWrite?: boolean): ReturnObject;
     sortDesc(property: string, overWrite?: boolean): ReturnObject;
     push(a: ICollectionItem): ReturnObject;
-    get length(): ReturnObject;
+    get length(): number;
     getPrevByIndex(item: ICollectionItem): ReturnObject;
     getNextByIndex(item: CollectionItem): ReturnObject;
     setPropertyAll(property: keyof CollectionItem, value: any): ReturnObject;
     setRandom(): ReturnObject;
     delete(itemOrId: string | ICollectionItem): ReturnObject;
+    protected shouldBeStringOrNumber(value: string | number): ReturnObject;
+    protected shouldBeStringNumberOrBool(value: string | number | boolean): ReturnObject;
 }
 //# sourceMappingURL=Collection.d.ts.map

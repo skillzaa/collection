@@ -100,43 +100,64 @@ isLast(id:string|number):ReturnObject {
     }
 } //getItem
 /**Just send back the first one  */
-searchFirst(prop:keyof CollectionItem, value:string|number):ReturnObject {
+
+searchFirst(prop:string = "id", value:string|number = 0):ReturnObject{
+//only string or number vlaues are allowed no object vlaues
+if (this.shouldBeStringNumberOrBool(value).success !== true){
+    return this.response(1,"The value argument can just contain number or string values");
+}
+//--------------------------------------- 
     for (let idx = 0; idx < this.data.length; idx++) {
         if (this.data[idx][prop] == value) {
-            return this.data[idx];
-        }
+            return  this.response(0,"Here is the first result found",true,this.data[idx]);            
+        }   
     }
-return false;    
+return this.response(2,"No maching result found");    
+} //
+search(prop:string = "id", value:string|number = 0):ReturnObject{
+//only string or number vlaues are allowed no object vlaues
+if (this.shouldBeStringNumberOrBool(value).success !== true){
+    return this.response(1,"The value argument can just contain number or string values");
+}
+const results:CollectionItem[]=[];
+//--------------------------------------- 
+    for (let idx = 0; idx < this.data.length; idx++) {
+        if (this.data[idx][prop] == value) {
+         results.push(this.data[idx]);
+        }   
+    }
+
+const numberOfResults =  results.length;  
+if( numberOfResults === 0 ){
+    return this.response(2,"No maching result found");    
+}else{
+     
+    const ret =  this.response(0,`Here are ${results.length}  results found`,true,results);    
+    ret.numberOfResults = numberOfResults;
+    return ret;
+}    
 } //
 
-search(prop:string = "id", value:string|number = 0):ReturnObject{
-    const final:CollectionItem[]|[] = [];
-    this.data.forEach(e => {
-        if (e[prop] == value) {
-            final.push(e);
-        }   
-    });
-    return final;
-} //
-//--A forEach loop once starts will loop through all the array elements and can not be stopped by return.
-searchAndFirst(prop1:string, value1:any, prop2:string, value2:any):ReturnObject {
-    for (let idx = 0; idx < this.data.length; idx++) {
-        const e = this.data[idx];
-        if ((e[prop1] == value1) && (e[prop2] == value2)) {
-            return e;
-        }
-    }
-    return false;
-} //
 searchAnd(prop1:string, value1:string|number, prop2:string, value2:string|number) :ReturnObject{
+
+if (this.shouldBeStringNumberOrBool(value1).success !== true){
+    return this.response(1,"The value argument can just contain number or string values");
+}    
+if (this.shouldBeStringNumberOrBool(value2).success !== true){
+    return this.response(1,"The value argument can just contain number or string values");
+}    
     const final:CollectionItem[] = [];
     for (let idx = 0; idx < this.data.length; idx++) {
         const e = this.data[idx];
-        if ((e[String(prop1)] == value1) && (e[prop2] == value2)) {
+        if ((e[String(prop1)] == value1) && (e[String(prop2)] == value2)) {
             final.push(e);
         }
     }
-    return final;
+const numberOfSearches = final.length;
+return this.response(0,
+    `There are a total of ${numberOfSearches} searches found`,
+    true,final);
+    
 } //   
 //------------------Batch 3
 find(id:string):ReturnObject {
@@ -211,7 +232,7 @@ public push(a:ICollectionItem):ReturnObject {
     this.data.push(a);
     return true;
 }
-get length():ReturnObject {
+get length():number {
     return this.data.length;
 }
 public getPrevByIndex(item:ICollectionItem):ReturnObject {
@@ -240,13 +261,13 @@ public setPropertyAll(property:keyof CollectionItem, value:any):ReturnObject {
     this.data.forEach(e => {
         e.setProperty(property,value);
     });    
-return true;    
+return this.response(0,"ok",true,this.data); 
 }
 public setRandom():ReturnObject {
     this.data.forEach(e => {
         e.setProperty("random",Math.ceil(Math.random()*9999));
     });
-return true;    
+return this.response(0,"ok",true,this.data);
 }
 //..............................................
 public delete(itemOrId:string|ICollectionItem):ReturnObject {
@@ -286,5 +307,19 @@ if (typeof deletedElementIndex === "number"){
 
 }//delete end
 
+protected shouldBeStringOrNumber(value:string|number){
+if( (typeof value !== "number") && ((typeof value !== "string")) ){  
+    return this.response(1,"The vlaue argument can just contain number or string values");
+}else{
+    return this.response(0,"ok",true);
+}
+}
+protected shouldBeStringNumberOrBool(value:string|number|boolean){
+if( (typeof value !== "number") && ((typeof value !== "string")) && (typeof value !== "boolean") ){
+    return this.response(1,"The vlaue argument can just contain number, string or boolean values");
+}else{
+    return this.response(0,"ok",true);
+}
+}
 
 } //class end
