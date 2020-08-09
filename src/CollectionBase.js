@@ -49,11 +49,12 @@ export default class CollectionBase {
             return parentId;
         }
     }
-    response(errorNumber = 0, message = "", success = false) {
+    response(errorNumber = 0, message = "", success = false, value = "") {
         const r = new ReturnObject();
         r.addMessage(message);
         r.errorNumber = errorNumber;
         r.success = success;
+        r.value = value;
         return r;
     }
     hasValue(value) {
@@ -65,4 +66,14 @@ export default class CollectionBase {
             return true;
         }
     }
+    checkIndexBounds(index) {
+        if ((Number(index) >= this.data.length)
+            ||
+                (Number(index) < 0)) {
+            return this.response(1, "The index is larger than the number of items in the collection");
+        }
+        else {
+            return this.response(0, "All ok", true, index);
+        }
+    } //fn
 } //class ends    

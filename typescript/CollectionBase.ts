@@ -54,11 +54,12 @@ if(typeof parentId !== "string" || parentId==""){
     return parentId;
 }
   }
-protected response(errorNumber=0,message="",success=false){
+protected response(errorNumber=0,message="",success=false,value:any=""){
     const r = new ReturnObject();
     r.addMessage(message);
     r.errorNumber = errorNumber;
     r.success = success;
+    r.value = value;
     return r;
 }
 protected hasValue(value:any):boolean{
@@ -67,6 +68,17 @@ if( (typeof value == "undefined") ||
     return false;
 }else{
     return true;}
-
 }    
+protected checkIndexBounds(index:number):ReturnObject{
+    if( (Number(index) >= this.data.length)
+    ||
+    (Number(index) < 0)
+){
+    return this.response(1,"The index is larger than the number of items in the collection");        
+} else{
+    return  this.response(0,"All ok",true,index);        
+}   
+}//fn
+
+////////////////////////////////////////
 } //class ends    

@@ -1,10 +1,13 @@
 import setup from './tests/setup.es.js';
-import Collection from './public/collection.js';
 
 const collection = setup();
 collection.useRandomIds = false;    
 
-console.log('collection :>> ', collection); 
+for (let idx = 0; idx < collection.length; idx++) {
+   const theId = collection.data[idx].id;
 
-const ret = collection.delete(2);
-console.log('ret :>> ', ret);
+   const ret = collection.indexToId(idx);
+   console.log("ret",ret);
+   //const theReturnedId= ret.value.id;
+   
+}     

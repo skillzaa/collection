@@ -15,7 +15,8 @@ export default class CollectionBase {
     protected isIdUnique(id: string | number): boolean;
     protected blankCopy(): CollectionItem;
     protected validateParentId(parentId: string): string;
-    protected response(errorNumber?: number, message?: string, success?: boolean): ReturnObject;
+    protected response(errorNumber?: number, message?: string, success?: boolean, value?: any): ReturnObject;
     protected hasValue(value: any): boolean;
+    protected checkIndexBounds(index: number): ReturnObject;
 }
 //# sourceMappingURL=CollectionBase.d.ts.map

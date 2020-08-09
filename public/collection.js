@@ -116,11 +116,12 @@ class CollectionBase {
             return parentId;
         }
     }
-    response(errorNumber = 0, message = "", success = false) {
+    response(errorNumber = 0, message = "", success = false, value = "") {
         const r = new ReturnObject();
         r.addMessage(message);
         r.errorNumber = errorNumber;
         r.success = success;
+        r.value = value;
         return r;
     }
     hasValue(value) {
@@ -132,12 +133,23 @@ class CollectionBase {
             return true;
         }
     }
+    checkIndexBounds(index) {
+        if ((Number(index) >= this.data.length)
+            ||
+                (Number(index) < 0)) {
+            return this.response(1, "The index is larger than the number of items in the collection");
+        }
+        else {
+            return this.response(0, "All ok", true, index);
+        }
+    } //fn
 } //class ends
 
 /**
  *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
  */
 //.......................................
+//implements ICollection --// on hold
 class Collection extends CollectionBase {
     constructor(data = []) {
         super(data);
@@ -150,42 +162,48 @@ class Collection extends CollectionBase {
         collectionItem.id = this.newId();
         collectionItem.sortOrder = this.sortOrderCounter++; //imp
         collectionItem.createdAt = new Date().getTime();
-        //.........
+        //.........dont check parent id existance give freedom
         collectionItem.parentId = String(parentId);
         this.data.push(collectionItem);
-        return collectionItem;
-    }
+        return this.response(0, "All ok", true, collectionItem);
+    } //fn
     insert(item) {
+        //--1
         if (this.hasValue(item) === false) {
             return this.response(3, "A valid collection item is required");
         }
-        if (this.hasValue(item.id) === false) {
-            return this.response(1, "A valid id is required");
-        }
-        if (this.isIdUnique(item.id) !== true) {
-            return this.response(2, "The id provided already exists in the system. Please provide a unique id");
-        }
+        //--2
         if (typeof item.id !== "string") {
             item.id = String(item.id);
         }
-        //...sort order
+        //--3 
+        if (this.hasValue(item.id) === false) {
+            return this.response(1, "A valid id is required");
+        }
+        //--4   ..string
+        if (this.isIdUnique(String(item.id)) !== true) {
+            return this.response(2, "The id provided already exists in the system. Please provide a unique id");
+        }
+        //--5 sort order
         if ((this.hasValue(item.sortOrder) === false) || (typeof item.sortOrder !== "number")) {
             item.sortOrder = this.sortOrderCounter++; //imp    
         }
+        //--5 sort order
         if (this.hasValue(item.parentId) === false) {
             item.parentId = "0"; //imp    
         }
         this.data.push(item);
-        return item;
+        return this.response(0, "All ok", true, item);
     }
     indexToId(index) {
-        if ((Number(index) >= this.data.length)
-            ||
-                (Number(index) < 0)) {
-            return this.response(1, "The index is larger than the number of items in the collection");
+        //-----------checkIndexBoundsResult    
+        const checkIndexBoundsResult = this.checkIndexBounds(index);
+        if (checkIndexBoundsResult.success !== true) {
+            return checkIndexBoundsResult;
         }
         let item = this.data[index];
-        return String(item.id);
+        //...--check if item is real item
+        const ret = this.response(0, "", true, String(item.id));
     }
     idToIndex(id) {
         if (typeof id !== "string") {
@@ -383,7 +401,7 @@ class Collection extends CollectionBase {
             theId = String(itemOrId);
         }
         else {
-            return this.response(1, "Wrong format of ID ", false);
+            return this.response(1, "Wrong format of ID ");
         }
         //----get the element from the array before removing
         const deletedElementIndex = this.idToIndex(theId);
@@ -397,9 +415,7 @@ class Collection extends CollectionBase {
                 }
             }
             this.data = newData;
-            const resp = this.response(0, "The deleted item is being returned in the value argument", true);
-            resp.value = deletedElement;
-            return resp;
+            return this.response(0, "The deleted item is being returned in the value argument", true, deletedElement);
         }
         else {
             return this.response(2, "Could not retrieve index");

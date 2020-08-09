@@ -18,13 +18,17 @@ describe("collection",()=>{
         createdAt : ""
         };
 
-collection.insert(item); 
+const ret = collection.insert(item); 
+test(`ret error 3`,()=>{expect(ret.errorNumber).toEqual(0)});            
+
 tester.testLen(1);
 tester.testProp("234","sortOrder",1);
 tester.testProp("234","id","234");
 
 });
-describe("collection",()=>{
+
+describe("this will work",()=>{
+//the null will be wrapped inside " and "    
     const item = {
         id: null,
         parentId:"0",
@@ -32,7 +36,8 @@ describe("collection",()=>{
         createdAt : ""
         };
 const ret = collection.insert(item); 
-test(`ret`,()=>{expect(ret.errorNumber).toEqual(1)})
+//console.log('ret :>> ', ret);
+test(`ret`,()=>{expect(ret.errorNumber).toEqual(0)})
 });
 
 describe("collection",()=>{
@@ -43,13 +48,14 @@ const item = {
     createdAt : ""
     };
 
-collection.insert(item); 
-//console.log('item :>> ', item);
-tester.testLen(2);
+const ret = collection.insert(item); 
+test(`ret`,()=>{expect(ret.errorNumber).toEqual(0)});
+//console.log('ret :>> ', ret);
+tester.testLen(3);
 tester.testProp("555","sortOrder",999);//--note
 tester.testProp("555","parentId","kgtf");//--note
 tester.testProp("555","id","555");
-});
+ });
 describe("dublicate id",()=>{
 const item = { //
     id: 555,
@@ -58,6 +64,8 @@ const item = { //
     createdAt : ""
     };
 
+    tester.testLen(3); //still 3 as prev time
+
 const ret = collection.insert(item); 
-test(`ret`,()=>{expect(ret.errorNumber).toEqual(2)})
+test(`ret`,()=>{expect(ret.errorNumber).toEqual(2)}); //not unique
 });
