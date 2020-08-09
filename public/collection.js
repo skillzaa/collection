@@ -203,7 +203,7 @@ class Collection extends CollectionBase {
         }
         let item = this.data[index];
         //...--check if item is real item
-        const ret = this.response(0, "", true, String(item.id));
+        return this.response(0, "", true, String(item.id));
     }
     idToIndex(id) {
         if (typeof id !== "string") {

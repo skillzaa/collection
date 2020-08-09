@@ -61,7 +61,7 @@ if(checkIndexBoundsResult.success !== true){
 
 let item = this.data[index];
 //...--check if item is real item
-const ret = this.response(0,"",true,String(item.id));         
+return this.response(0,"",true,String(item.id));         
 }
 
 public idToIndex(id:string):ReturnObject {
