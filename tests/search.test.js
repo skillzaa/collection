@@ -50,8 +50,29 @@ test("tfOnly",()=>{expect(typeof e.oddOrEven).toBe("boolean")});
 
 
 describe("",()=>{
-//////////////////////////////////////////
-//////////////////////////////////////////
+//---get all false vlaues
+const trueValues = collection.search("oddOrEven",false);
+//--add a property "tag"
+trueValues.value.forEach(e => {
+    e.setProperty("tag", "this is false");
+});
+
+//--search based on true and tag
+const newArray = collection.searchAnd("oddOrEven",false,"tag","this is false");
+//----------------------------
+
+newArray.value.forEach(e => {
+    oddOrEven = (e.oddOrEven == false)? true:false;//give true if value = false
+    tag= (e.tag == 'this is false')? true:false;
+    test("oddOrEven",()=>{expect(oddOrEven).toBeTruthy()});            
+    test("tag",()=>{expect(tag).toBeTruthy()});            
+});
+
+});
+
+
+describe("",()=>{
+
 //---get all true vlaues
 const trueValues = collection.search("oddOrEven",true);
 //--add a property "tag"
@@ -69,12 +90,19 @@ newArray.value.forEach(e => {
     test("oddOrEven",()=>{expect(oddOrEven).toBeTruthy()});            
     test("tag",()=>{expect(tag).toBeTruthy()});            
 });
-// /////////////finaly also check searchAndFirst
-// const andFirst = collection.searchAndFirst("oddOrEven",true,"tag","this is true");
 
-// test("tag",()=>{expect(andFirst.id).toEqual(newArray[0].id)});            
+});
 
-//////////////////////////////////////////
-//////////////////////////////////////////
-//////////////////////////////////////////
+
+
+describe("no search found",()=>{
+const result  = collection.search("oddOrEven","wrong value");
+test("",()=>{expect(result.errorNumber).toBe(2)});            
+});
+
+describe("search first",()=>{
+
+ const first = collection.searchFirst("oddOrEven",true);
+ test("",()=>{expect(first.errorNumber).toBe(0)})
+ ;            
 });

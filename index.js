@@ -34,3 +34,8 @@ trueValues.value.forEach(e => {
 //--search based on true and tag
 const newArray = collection.searchAnd("oddOrEven",true,"tag","this is true");
 console.log('newArray :>> ', newArray);
+
+
+const first = collection.searchFirst("oddOrEven",true);
+ 
+ console.log('first :>> ', first);
