@@ -11,10 +11,9 @@ const tester = new Tester(collection);
 describe("indexToId--check each index",()=>{    
    for (let idx = 0; idx < collection.length; idx++) {
        const theId = collection.data[idx].id;
-
        const ret = collection.indexToId(idx);
        //console.log("ret",ret);
-       const theReturnedId= ret.value.id;
+       const theReturnedId= ret.data.id;
        test(`check Id`,()=>{expect(theReturnedId).toBe(theReturnedId)});
        
    }     
@@ -39,9 +38,9 @@ test(`error`,()=>{expect(ret4.errorNumber).toBe(1)});
 describe("idToIndex",()=>{    
 let theId = 1;
 for (let idx = 0; idx < collection.length; idx++) {
-  const theReturnedIndex = collection.idToIndex(String(theId));
+  const ret = collection.idToIndex(String(theId));
    theId++;
-   test(`check Id`,()=>{expect(theReturnedIndex).toBe(idx)});
+   test(`check Id`,()=>{expect(ret.data).toBe(idx)});
 }     
 });
 

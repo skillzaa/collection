@@ -6,7 +6,7 @@ export default class ReturnObject {
     constructor() {
         this.messages = [];
         this.success = false; //bydefault its error
-        this.value = null;
+        this.data = null;
         this.errorNumber = 0; //0 means all correct no errors;
         /////////////////////////////////    
     }

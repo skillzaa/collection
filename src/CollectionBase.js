@@ -49,12 +49,20 @@ export default class CollectionBase {
             return parentId;
         }
     }
-    response(errorNumber = 0, message = "", success = false, value = "") {
+    /**
+     *
+     * @param errorNumber
+     * @param message
+     * @param success
+     * @param value
+     * errorNumber 0 means all is well
+     */
+    response(errorNumber = 0, message = "", success = false, data = "") {
         const r = new ReturnObject();
         r.addMessage(message);
         r.errorNumber = errorNumber;
         r.success = success;
-        r.value = value;
+        r.data = data;
         return r;
     }
     hasValue(value) {
@@ -70,7 +78,7 @@ export default class CollectionBase {
         if ((Number(index) >= this.data.length)
             ||
                 (Number(index) < 0)) {
-            return this.response(1, "The index is larger than the number of items in the collection");
+            return this.response(1, "The index is either larger or smaller than the number of items in the collection");
         }
         else {
             return this.response(0, "All ok", true, index);

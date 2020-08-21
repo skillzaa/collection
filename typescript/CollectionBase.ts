@@ -1,8 +1,6 @@
 "use strict";
 import CollectionItem from "./CollectionItem.js";
 import ICollectionItem from "./interfaces/ICollectionItem.js";
-
-
 import ReturnObject from "./ReturnObject.js";
 
 /**      
@@ -54,12 +52,20 @@ if(typeof parentId !== "string" || parentId==""){
     return parentId;
 }
   }
-protected response(errorNumber=0,message="",success=false,value:any=""){
+/**
+ * 
+ * @param errorNumber 
+ * @param message 
+ * @param success 
+ * @param value 
+ * errorNumber 0 means all is well
+ */  
+protected response(errorNumber=0,message="",success=false,data:any=""){
     const r = new ReturnObject();
     r.addMessage(message);
     r.errorNumber = errorNumber;
     r.success = success;
-    r.value = value;
+    r.data = data;
     return r;
 }
 protected hasValue(value:any):boolean{
@@ -74,7 +80,7 @@ protected checkIndexBounds(index:number):ReturnObject{
     ||
     (Number(index) < 0)
 ){
-    return this.response(1,"The index is larger than the number of items in the collection");        
+    return this.response(1,"The index is either larger or smaller than the number of items in the collection");        
 } else{
     return  this.response(0,"All ok",true,index);        
 }   

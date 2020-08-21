@@ -19,7 +19,6 @@ super(data);
 }
 
 public add(parentId:string="0"):ReturnObject {
-
 const collectionItem:ICollectionItem = new CollectionItem();
 collectionItem.id = this.newId();
 collectionItem.sortOrder = this.sortOrderCounter++; //imp
@@ -52,7 +51,11 @@ item.parentId = "0"; //imp
 this.data.push(item);
 return  this.response(0,"All ok",true,item);
 }   
-
+/**
+ * 
+ * @param index 
+ * the only difference between getting directly the id 4and calling this function is that this function checks the index bounds
+ */
 public indexToId(index:number):ReturnObject {
 //-----------checkIndexBoundsResult    
 const checkIndexBoundsResult = this.checkIndexBounds(index);
@@ -65,15 +68,14 @@ return this.response(0,"",true,String(item.id));
 }
 
 public idToIndex(id:string):ReturnObject {
-if(typeof id !== "string"){id = String(id);}    
-
+if(typeof id !== "string"){id = String(id);} //just convert type   
+//--here i have to use some hasing algorithem if needed
 for (let idx = 0; idx < this.data.length; idx++) {
-     
     if (this.data[idx].id == id) {
-        return idx;
+        return this.response(0,"success",true,idx); 
     }     
  }
-
+//--if the id is not found....
 return this.response(3,"Could not find the index. Most probably the id was not found");    
 }//...............abs
 
@@ -269,13 +271,14 @@ public setRandom():ReturnObject {
     });
 return this.response(0,"ok",true,this.data);
 }
-//..............................................
-public delete(itemOrId:string|ICollectionItem):ReturnObject {
 /**
- * To Delete
+ * @param itemOrId 
+ * the delete function deletes by ID
+ * * To Delete
  * -if the itemOrId is not string ie id get the id out of it
  * -the fn returns only ReturnOBject
- **/
+ */
+public delete(itemOrId:string|ICollectionItem):ReturnObject {
 let theId:string;  
 if (typeof itemOrId == 'object') {
 theId = String(itemOrId.id);//use string just for safety
@@ -287,9 +290,9 @@ theId = String(itemOrId.id);//use string just for safety
     return this.response(1,"Wrong format of ID ");
 }
 //----get the element from the array before removing
-const deletedElementIndex:number|ReturnObject = this.idToIndex(theId);
-if (typeof deletedElementIndex === "number"){
-    const deletedElement = this.data[deletedElementIndex];
+const ret:ReturnObject = this.idToIndex(theId);
+if (ret.success === true){//means not an error
+    const deletedElement = this.data[ret.data];
     ///----deletion statement
     const newData = [];
         for (let idx = 0; idx < this.data.length; idx++) {
@@ -297,14 +300,12 @@ if (typeof deletedElementIndex === "number"){
                 newData.push(this.data[idx]);
             }
         }
-    
-        this.data = newData;
+//we created a new data array and assigned it to this.data after removing the given id--we could also have used splice??    
+        this.data = newData;//dont return this
     return  this.response(0,"The deleted item is being returned in the value argument",true,deletedElement);
 }else{
-    return this.response(2,"Could not retrieve index");
+    return this.response(2,"Could not find this ID");
 }
-//---save the deleted elm for return;
-
 }//delete end
 
 protected shouldBeStringOrNumber(value:string|number){

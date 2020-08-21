@@ -6,7 +6,7 @@ if (returnObject.success===true)......
 export default class ReturnObject implements IReturnObject{
 messages: string[]=[];    
 success:boolean=false;//bydefault its error
-value:any=null;
+data:any=null;
 errorNumber:number=0;//0 means all correct no errors;
 
 public addMessage(msg:string){   

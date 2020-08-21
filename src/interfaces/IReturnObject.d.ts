@@ -5,7 +5,7 @@ if (returnObject.success===true)......
 export default interface IReturnObject {
     messages: string[];
     success: boolean;
-    value: any;
+    data: any;
     errorNumber: number;
     addMessage(msg: string): boolean;
     getMessageString(): string;

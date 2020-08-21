@@ -11,6 +11,11 @@ export default class Collection extends CollectionBase {
     constructor(data?: ICollectionItem[]);
     add(parentId?: string): ReturnObject;
     insert(item: ICollectionItem): ReturnObject;
+    /**
+     *
+     * @param index
+     * the only difference between getting directly the id 4and calling this function is that this function checks the index bounds
+     */
     indexToId(index: number): ReturnObject;
     idToIndex(id: string): ReturnObject;
     isFirst(id: string): ReturnObject;
@@ -31,6 +36,13 @@ export default class Collection extends CollectionBase {
     getNextByIndex(item: CollectionItem): ReturnObject;
     setPropertyAll(property: keyof CollectionItem, value: any): ReturnObject;
     setRandom(): ReturnObject;
+    /**
+     * @param itemOrId
+     * the delete function deletes by ID
+     * * To Delete
+     * -if the itemOrId is not string ie id get the id out of it
+     * -the fn returns only ReturnOBject
+     */
     delete(itemOrId: string | ICollectionItem): ReturnObject;
     protected shouldBeStringOrNumber(value: string | number): ReturnObject;
     protected shouldBeStringNumberOrBool(value: string | number | boolean): ReturnObject;

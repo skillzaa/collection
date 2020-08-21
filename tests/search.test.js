@@ -30,7 +30,7 @@ test("tfOnly",()=>{expect(typeof e.oddOrEven).toBe("boolean")});
 
  test("trueOnly",()=>{expect(res.success).toBeTruthy()});            
  test("trueOnly",()=>{expect(res.numberOfResults).toBe(5)});   
- res.value.forEach(e => {
+ res.data.forEach(e => {
     test("tfOnly",()=>{expect(e.oddOrEven).toBeTruthy()});            
     });        
  
@@ -40,7 +40,7 @@ test("tfOnly",()=>{expect(typeof e.oddOrEven).toBe("boolean")});
 
  test("trueOnly",()=>{expect(res2.success).toBeTruthy()});            
  test("trueOnly",()=>{expect(res2.numberOfResults).toBe(5)});    
- res2.value.forEach(e => {
+ res2.data.forEach(e => {
     test("tfOnly",()=>{expect(e.oddOrEven).toBeFalsy()});            
     });        
  
@@ -53,7 +53,7 @@ describe("",()=>{
 //---get all false vlaues
 const trueValues = collection.search("oddOrEven",false);
 //--add a property "tag"
-trueValues.value.forEach(e => {
+trueValues.data.forEach(e => {
     e.setProperty("tag", "this is false");
 });
 
@@ -61,7 +61,7 @@ trueValues.value.forEach(e => {
 const newArray = collection.searchAnd("oddOrEven",false,"tag","this is false");
 //----------------------------
 
-newArray.value.forEach(e => {
+newArray.data.forEach(e => {
     oddOrEven = (e.oddOrEven == false)? true:false;//give true if value = false
     tag= (e.tag == 'this is false')? true:false;
     test("oddOrEven",()=>{expect(oddOrEven).toBeTruthy()});            
@@ -76,7 +76,7 @@ describe("",()=>{
 //---get all true vlaues
 const trueValues = collection.search("oddOrEven",true);
 //--add a property "tag"
-trueValues.value.forEach(e => {
+trueValues.data.forEach(e => {
     e.setProperty("tag", "this is true");
 });
 
@@ -84,7 +84,7 @@ trueValues.value.forEach(e => {
 const newArray = collection.searchAnd("oddOrEven",true,"tag","this is true");
 //----------------------------
 
-newArray.value.forEach(e => {
+newArray.data.forEach(e => {
     oddOrEven = (e.oddOrEven == true)? true:false;
     tag= (e.tag == 'this is true')? true:false;
     test("oddOrEven",()=>{expect(oddOrEven).toBeTruthy()});            

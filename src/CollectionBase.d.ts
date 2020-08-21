@@ -15,7 +15,15 @@ export default class CollectionBase {
     protected isIdUnique(id: string | number): boolean;
     protected blankCopy(): CollectionItem;
     protected validateParentId(parentId: string): string;
-    protected response(errorNumber?: number, message?: string, success?: boolean, value?: any): ReturnObject;
+    /**
+     *
+     * @param errorNumber
+     * @param message
+     * @param success
+     * @param value
+     * errorNumber 0 means all is well
+     */
+    protected response(errorNumber?: number, message?: string, success?: boolean, data?: any): ReturnObject;
     protected hasValue(value: any): boolean;
     protected checkIndexBounds(index: number): ReturnObject;
 }

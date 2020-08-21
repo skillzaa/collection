@@ -52,7 +52,7 @@ class ReturnObject {
     constructor() {
         this.messages = [];
         this.success = false; //bydefault its error
-        this.value = null;
+        this.data = null;
         this.errorNumber = 0; //0 means all correct no errors;
         /////////////////////////////////    
     }
@@ -116,12 +116,20 @@ class CollectionBase {
             return parentId;
         }
     }
-    response(errorNumber = 0, message = "", success = false, value = "") {
+    /**
+     *
+     * @param errorNumber
+     * @param message
+     * @param success
+     * @param value
+     * errorNumber 0 means all is well
+     */
+    response(errorNumber = 0, message = "", success = false, data = "") {
         const r = new ReturnObject();
         r.addMessage(message);
         r.errorNumber = errorNumber;
         r.success = success;
-        r.value = value;
+        r.data = data;
         return r;
     }
     hasValue(value) {
@@ -137,7 +145,7 @@ class CollectionBase {
         if ((Number(index) >= this.data.length)
             ||
                 (Number(index) < 0)) {
-            return this.response(1, "The index is larger than the number of items in the collection");
+            return this.response(1, "The index is either larger or smaller than the number of items in the collection");
         }
         else {
             return this.response(0, "All ok", true, index);
@@ -195,6 +203,11 @@ class Collection extends CollectionBase {
         this.data.push(item);
         return this.response(0, "All ok", true, item);
     }
+    /**
+     *
+     * @param index
+     * the only difference between getting directly the id 4and calling this function is that this function checks the index bounds
+     */
     indexToId(index) {
         //-----------checkIndexBoundsResult    
         const checkIndexBoundsResult = this.checkIndexBounds(index);
@@ -208,12 +221,14 @@ class Collection extends CollectionBase {
     idToIndex(id) {
         if (typeof id !== "string") {
             id = String(id);
-        }
+        } //just convert type   
+        //--here i have to use some hasing algorithem if needed
         for (let idx = 0; idx < this.data.length; idx++) {
             if (this.data[idx].id == id) {
-                return idx;
+                return this.response(0, "success", true, idx);
             }
         }
+        //--if the id is not found....
         return this.response(3, "Could not find the index. Most probably the id was not found");
     } //...............abs
     isFirst(id) {
@@ -398,13 +413,14 @@ class Collection extends CollectionBase {
         });
         return this.response(0, "ok", true, this.data);
     }
-    //..............................................
+    /**
+     * @param itemOrId
+     * the delete function deletes by ID
+     * * To Delete
+     * -if the itemOrId is not string ie id get the id out of it
+     * -the fn returns only ReturnOBject
+     */
     delete(itemOrId) {
-        /**
-         * To Delete
-         * -if the itemOrId is not string ie id get the id out of it
-         * -the fn returns only ReturnOBject
-         **/
         let theId;
         if (typeof itemOrId == 'object') {
             theId = String(itemOrId.id); //use string just for safety
@@ -419,9 +435,9 @@ class Collection extends CollectionBase {
             return this.response(1, "Wrong format of ID ");
         }
         //----get the element from the array before removing
-        const deletedElementIndex = this.idToIndex(theId);
-        if (typeof deletedElementIndex === "number") {
-            const deletedElement = this.data[deletedElementIndex];
+        const ret = this.idToIndex(theId);
+        if (ret.success === true) { //means not an error
+            const deletedElement = this.data[ret.data];
             ///----deletion statement
             const newData = [];
             for (let idx = 0; idx < this.data.length; idx++) {
@@ -429,13 +445,13 @@ class Collection extends CollectionBase {
                     newData.push(this.data[idx]);
                 }
             }
-            this.data = newData;
+            //we created a new data array and assigned it to this.data after removing the given id--we could also have used splice??    
+            this.data = newData; //dont return this
             return this.response(0, "The deleted item is being returned in the value argument", true, deletedElement);
         }
         else {
-            return this.response(2, "Could not retrieve index");
+            return this.response(2, "Could not find this ID");
         }
-        //---save the deleted elm for return;
     } //delete end
     shouldBeStringOrNumber(value) {
         if ((typeof value !== "number") && ((typeof value !== "string"))) {
