@@ -26,6 +26,7 @@ export default class Collection extends CollectionBase {
     searchFirst(prop?: string, value?: string | number): ReturnObject;
     search(prop?: string, value?: string | number): ReturnObject;
     searchAnd(prop1: string, value1: string | number, prop2: string, value2: string | number): ReturnObject;
+    searchOr(prop1: string, value1: string | number, prop2: string, value2: string | number): ReturnObject;
     find(id: string): ReturnObject;
     findChildren(parentItemId: string | number): ReturnObject;
     sort(property?: string, overWrite?: boolean): ReturnObject;

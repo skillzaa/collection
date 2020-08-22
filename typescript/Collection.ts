@@ -161,6 +161,27 @@ return this.response(0,
     true,final);
     
 } //   
+searchOr(prop1:string, value1:string|number, prop2:string, value2:string|number) :ReturnObject{
+
+if (this.shouldBeStringNumberOrBool(value1).success !== true){
+    return this.response(1,"The value argument can just contain number string or boolean values");
+}    
+if (this.shouldBeStringNumberOrBool(value2).success !== true){
+    return this.response(1,"The value argument can just contain number string or boolean values");
+}    
+    const final:CollectionItem[] = [];
+    for (let idx = 0; idx < this.data.length; idx++) {
+        const e = this.data[idx];
+        if ((e[String(prop1)] == value1) || (e[String(prop2)] == value2)) {
+            final.push(e);
+        }
+    }
+const numberOfSearches = final.length;
+return this.response(0,
+    `There are a total of ${numberOfSearches} searches found`,
+    true,final);
+    
+} //   
 //------------------Batch 3
 find(id:string):ReturnObject {
     let final:boolean|ICollectionItem = false;
