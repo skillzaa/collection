@@ -1,10 +1,6 @@
 "use strict";
 import CollectionItem from "./CollectionItem.js";
 import ReturnObject from "./ReturnObject.js";
-/**
- *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
- */
-//.......................................
 export default class CollectionBase {
     constructor(data = []) {
         //If useRandomIds == true we use NON-random id as "1","2","3","4" else we always use string based uuids.
@@ -84,4 +80,29 @@ export default class CollectionBase {
             return this.response(0, "All ok", true, index);
         }
     } //fn
+    ////////////////////////////////////////
+    shouldBeStringOrNumber(value) {
+        if ((typeof value !== "number") && ((typeof value !== "string"))) {
+            return this.response(1, "The vlaue argument can just contain number or string values");
+        }
+        else {
+            return this.response(0, "ok", true);
+        }
+    }
+    shouldBeStringNumberOrBool(value) {
+        if ((typeof value !== "number") && ((typeof value !== "string")) && (typeof value !== "boolean")) {
+            return this.response(1, "The vlaue argument can just contain number, string or boolean values");
+        }
+        else {
+            return this.response(0, "ok", true);
+        }
+    }
+    ////////////////////////////////////////
+    push(a) {
+        this.data.push(a);
+        return true;
+    }
+    get length() {
+        return this.data.length;
+    }
 } //class ends    

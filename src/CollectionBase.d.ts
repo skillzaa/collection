@@ -1,9 +1,6 @@
 import CollectionItem from "./CollectionItem.js";
 import ICollectionItem from "./interfaces/ICollectionItem.js";
 import ReturnObject from "./ReturnObject.js";
-/**
- *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
- */
 export default class CollectionBase {
     protected idCounter: number;
     protected sortOrderCounter: number;
@@ -26,5 +23,9 @@ export default class CollectionBase {
     protected response(errorNumber?: number, message?: string, success?: boolean, data?: any): ReturnObject;
     protected hasValue(value: any): boolean;
     protected checkIndexBounds(index: number): ReturnObject;
+    protected shouldBeStringOrNumber(value: string | number): ReturnObject;
+    protected shouldBeStringNumberOrBool(value: string | number | boolean): ReturnObject;
+    push(a: ICollectionItem): ReturnObject;
+    get length(): number;
 }
 //# sourceMappingURL=CollectionBase.d.ts.map

@@ -1,18 +1,11 @@
 "use strict";
-import CollectionBase from "./CollectionBase.js";
-import ICollection from "./interfaces/ICollection.js";
+import Find from "./Find.js";
+//import ICollection from "./interfaces/ICollection.js";
 import CollectionItem from "./CollectionItem.js";
 import ICollectionItem from "./interfaces/ICollectionItem.js";
 import ReturnObject from "./ReturnObject.js";
-/**      
- *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
- */
-//.......................................
-//implements ICollection --// on hold
-export default class Collection  extends CollectionBase {
-//If debugMode == true we use NON-random id as 1,2,3,4 else we always use string based uuids.
-public useRandomIds:boolean = false; //By default True
-public data:ICollectionItem[]=[];
+
+export default class Collection  extends Find {
 
 constructor(data:ICollectionItem[]=[]) {
 super(data);    
@@ -102,86 +95,6 @@ isLast(id:string|number):ReturnObject {
     }
 } //getItem
 /**Just send back the first one  */
-
-searchFirst(prop:string = "id", value:string|number = 0):ReturnObject{
-//only string or number vlaues are allowed no object vlaues
-if (this.shouldBeStringNumberOrBool(value).success !== true){
-    return this.response(1,"The value argument can just contain number or string values");
-}
-//--------------------------------------- 
-    for (let idx = 0; idx < this.data.length; idx++) {
-        if (this.data[idx][prop] == value) {
-            return  this.response(0,"Here is the first result found",true,this.data[idx]);            
-        }   
-    }
-return this.response(2,"No maching result found");    
-} //
-search(prop:string = "id", value:string|number = 0):ReturnObject{
-//only string or number vlaues are allowed no object vlaues
-if (this.shouldBeStringNumberOrBool(value).success !== true){
-    return this.response(1,"The value argument can just contain number or string values");
-}
-const results:CollectionItem[]=[];
-//--------------------------------------- 
-    for (let idx = 0; idx < this.data.length; idx++) {
-        if (this.data[idx][prop] == value) {
-         results.push(this.data[idx]);
-        }   
-    }
-
-const numberOfResults =  results.length;  
-if( numberOfResults === 0 ){
-    return this.response(2,"No maching result found");    
-}else{
-     
-    const ret =  this.response(0,`Here are ${results.length}  results found`,true,results);    
-    ret.numberOfResults = numberOfResults;
-    return ret;
-}    
-} //
-
-searchAnd(prop1:string, value1:string|number, prop2:string, value2:string|number) :ReturnObject{
-
-if (this.shouldBeStringNumberOrBool(value1).success !== true){
-    return this.response(1,"The value argument can just contain number or string values");
-}    
-if (this.shouldBeStringNumberOrBool(value2).success !== true){
-    return this.response(1,"The value argument can just contain number or string values");
-}    
-    const final:CollectionItem[] = [];
-    for (let idx = 0; idx < this.data.length; idx++) {
-        const e = this.data[idx];
-        if ((e[String(prop1)] == value1) && (e[String(prop2)] == value2)) {
-            final.push(e);
-        }
-    }
-const numberOfSearches = final.length;
-return this.response(0,
-    `There are a total of ${numberOfSearches} searches found`,
-    true,final);
-    
-} //   
-searchOr(prop1:string, value1:string|number, prop2:string, value2:string|number) :ReturnObject{
-
-if (this.shouldBeStringNumberOrBool(value1).success !== true){
-    return this.response(1,"The value argument can just contain number string or boolean values");
-}    
-if (this.shouldBeStringNumberOrBool(value2).success !== true){
-    return this.response(1,"The value argument can just contain number string or boolean values");
-}    
-    const final:CollectionItem[] = [];
-    for (let idx = 0; idx < this.data.length; idx++) {
-        const e = this.data[idx];
-        if ((e[String(prop1)] == value1) || (e[String(prop2)] == value2)) {
-            final.push(e);
-        }
-    }
-const numberOfSearches = final.length;
-return this.response(0,
-    `There are a total of ${numberOfSearches} searches found`,
-    true,final);
-    
-} //   
 //------------------Batch 3
 find(id:string):ReturnObject {
     let final:boolean|ICollectionItem = false;
@@ -202,62 +115,7 @@ findChildren(parentItemId:string|number):ReturnObject {
     });
     return final;
 } //
-sort(property:string="sortOrder",overWrite:boolean = true):ReturnObject {
-    let sorted = this.data.sort((a, b) => {
-        const bandA = a[property] || 0;
-        const bandB = b[property] || 0;
-        let comparison = 0;
-        if (bandA > bandB) {
-            comparison = 1; //-keep the same a .b
-        }
-        else if (bandA < bandB) {
-            comparison = -1; //swap both from a-b to b-a
-        }
-        return comparison; //????
-    });
-    //---array.sort ends      
-    if (overWrite === true) {
-        this.data = sorted;
-        return sorted; //actually return aoo
-    }
-    else {
-        const newArray = sorted.map(a => Object.assign({}, a));
-        return newArray;
-    }
-} //sortBySortOrder
-sortDesc(property:string, overWrite = false):ReturnObject {
-    let sorted = this.data.sort((a, b) => {
-        const bandA = a[property] || 0;
-        const bandB = b[property] || 0;
-        let comparison = 0;
-        if (bandA > bandB) {
-            comparison = -1; //from 1 to -1 to make desc
-        }
-        else if (bandA < bandB) {
-            comparison = 1;//from -1 to 1 to make desc
-        }
-        return comparison;
-    });
-    ////...................................
-    //---array.sort ends      
-    if (overWrite === true) {
-        this.data = sorted;
-        return sorted; //actually return aoo
-    }
-    else {
-        const newArray = sorted.map(a => Object.assign({}, a));
-        return newArray;
-    }
-    ////...................................
-} //sortBySortOrder        
 //-----------------------------------sort ends
-public push(a:ICollectionItem):ReturnObject {
-    this.data.push(a);
-    return true;
-}
-get length():number {
-    return this.data.length;
-}
 public getPrevByIndex(item:ICollectionItem):ReturnObject {
     let isFirst = this.isFirst(item.id);
     if (isFirst == false) {
@@ -292,56 +150,6 @@ public setRandom():ReturnObject {
     });
 return this.response(0,"ok",true,this.data);
 }
-/**
- * @param itemOrId 
- * the delete function deletes by ID
- * * To Delete
- * -if the itemOrId is not string ie id get the id out of it
- * -the fn returns only ReturnOBject
- */
-public delete(itemOrId:string|ICollectionItem):ReturnObject {
-let theId:string;  
-if (typeof itemOrId == 'object') {
-theId = String(itemOrId.id);//use string just for safety
-}else if (typeof itemOrId == 'string'){
-    theId = itemOrId;
-}else if (typeof itemOrId == 'number'){
-    theId = String(itemOrId);
-}else{
-    return this.response(1,"Wrong format of ID ");
-}
-//----get the element from the array before removing
-const ret:ReturnObject = this.idToIndex(theId);
-if (ret.success === true){//means not an error
-    const deletedElement = this.data[ret.data];
-    ///----deletion statement
-    const newData = [];
-        for (let idx = 0; idx < this.data.length; idx++) {
-            if(this.data[idx].id !== theId){
-                newData.push(this.data[idx]);
-            }
-        }
-//we created a new data array and assigned it to this.data after removing the given id--we could also have used splice??    
-        this.data = newData;//dont return this
-    return  this.response(0,"The deleted item is being returned in the value argument",true,deletedElement);
-}else{
-    return this.response(2,"Could not find this ID");
-}
-}//delete end
 
-protected shouldBeStringOrNumber(value:string|number){
-if( (typeof value !== "number") && ((typeof value !== "string")) ){  
-    return this.response(1,"The vlaue argument can just contain number or string values");
-}else{
-    return this.response(0,"ok",true);
-}
-}
-protected shouldBeStringNumberOrBool(value:string|number|boolean){
-if( (typeof value !== "number") && ((typeof value !== "string")) && (typeof value !== "boolean") ){
-    return this.response(1,"The vlaue argument can just contain number, string or boolean values");
-}else{
-    return this.response(0,"ok",true);
-}
-}
 
 } //class end

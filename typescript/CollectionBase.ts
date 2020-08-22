@@ -3,10 +3,6 @@ import CollectionItem from "./CollectionItem.js";
 import ICollectionItem from "./interfaces/ICollectionItem.js";
 import ReturnObject from "./ReturnObject.js";
 
-/**      
- *-This is a class Wrapped around an Array of Objects, it add into each object some fileds like id,sortOrder, parentId etc.
- */
-//.......................................
 export default class CollectionBase{
 //If useRandomIds == true we use NON-random id as "1","2","3","4" else we always use string based uuids.
 
@@ -85,6 +81,31 @@ protected checkIndexBounds(index:number):ReturnObject{
     return  this.response(0,"All ok",true,index);        
 }   
 }//fn
+
+////////////////////////////////////////
+protected shouldBeStringOrNumber(value:string|number){
+if( (typeof value !== "number") && ((typeof value !== "string")) ){  
+    return this.response(1,"The vlaue argument can just contain number or string values");
+}else{
+    return this.response(0,"ok",true);
+}
+}
+protected shouldBeStringNumberOrBool(value:string|number|boolean){
+if( (typeof value !== "number") && ((typeof value !== "string")) && (typeof value !== "boolean") ){
+    return this.response(1,"The vlaue argument can just contain number, string or boolean values");
+}else{
+    return this.response(0,"ok",true);
+}
+}
+    
+////////////////////////////////////////
+public push(a:ICollectionItem):ReturnObject {
+    this.data.push(a);
+    return true;
+}
+get length():number {
+    return this.data.length;
+}
 
 ////////////////////////////////////////
 } //class ends    
