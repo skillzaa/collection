@@ -105,4 +105,39 @@ export default class CollectionBase {
     get length() {
         return this.data.length;
     }
+    setPropertyAll(property, value) {
+        let arr = [];
+        this.data.forEach(e => {
+            e.setProperty(property, value);
+        });
+        return this.response(0, "ok", true, this.data);
+    }
+    setRandom() {
+        this.data.forEach(e => {
+            e.setProperty("random", Math.ceil(Math.random() * 9999));
+        });
+        return this.response(0, "ok", true, this.data);
+    }
+    isFirst(id) {
+        if (this.data[0].id == id) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    } //getItem
+    getFirst() {
+        return this.data[0];
+    } //getItem
+    getLast() {
+        return this.data[this.data.length - 1];
+    } //getlast
+    isLast(id) {
+        if (this.data[this.data.length - 1].id == id) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    } //islast
 } //class ends    

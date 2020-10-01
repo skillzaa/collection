@@ -13,16 +13,7 @@ export default class Collection extends Find {
      */
     indexToId(index: number): ReturnObject;
     idToIndex(id: string): ReturnObject;
-    isFirst(id: string): ReturnObject;
-    getFirst(): ReturnObject;
-    getLast(): ReturnObject;
-    isLast(id: string | number): ReturnObject;
-    /**Just send back the first one  */
-    find(id: string): ReturnObject;
-    findChildren(parentItemId: string | number): ReturnObject;
     getPrevByIndex(item: ICollectionItem): ReturnObject;
     getNextByIndex(item: CollectionItem): ReturnObject;
-    setPropertyAll(property: keyof CollectionItem, value: any): ReturnObject;
-    setRandom(): ReturnObject;
 }
 //# sourceMappingURL=Collection.d.ts.map

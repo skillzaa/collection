@@ -172,6 +172,40 @@ class CollectionBase {
     get length() {
         return this.data.length;
     }
+    setPropertyAll(property, value) {
+        this.data.forEach(e => {
+            e.setProperty(property, value);
+        });
+        return this.response(0, "ok", true, this.data);
+    }
+    setRandom() {
+        this.data.forEach(e => {
+            e.setProperty("random", Math.ceil(Math.random() * 9999));
+        });
+        return this.response(0, "ok", true, this.data);
+    }
+    isFirst(id) {
+        if (this.data[0].id == id) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    } //getItem
+    getFirst() {
+        return this.data[0];
+    } //getItem
+    getLast() {
+        return this.data[this.data.length - 1];
+    } //getlast
+    isLast(id) {
+        if (this.data[this.data.length - 1].id == id) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    } //islast
 } //class ends
 
 class Delete extends CollectionBase {
@@ -382,49 +416,6 @@ class Collection extends Find {
         //--if the id is not found....
         return this.response(3, "Could not find the index. Most probably the id was not found");
     } //...............abs
-    isFirst(id) {
-        if (this.data[0].id == id) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    } //getItem
-    getFirst() {
-        return this.data[0];
-    } //getItem
-    getLast() {
-        return this.data[this.data.length - 1];
-    } //getItem
-    isLast(id) {
-        if (this.data[this.data.length - 1].id == id) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    } //getItem
-    /**Just send back the first one  */
-    //------------------Batch 3
-    find(id) {
-        let final = false;
-        this.data.forEach(e => {
-            if (e.id == id) {
-                final = e;
-            }
-        });
-        return final;
-    } //getItem
-    findChildren(parentItemId) {
-        let final = [];
-        this.data.forEach(e => {
-            if (e['parentId'] == parentItemId) {
-                final.push(e);
-            }
-        });
-        return final;
-    } //
-    //-----------------------------------sort ends
     getPrevByIndex(item) {
         let isFirst = this.isFirst(item.id);
         if (isFirst == false) {
@@ -445,18 +436,6 @@ class Collection extends Find {
             return false;
         }
     } //fn
-    setPropertyAll(property, value) {
-        this.data.forEach(e => {
-            e.setProperty(property, value);
-        });
-        return this.response(0, "ok", true, this.data);
-    }
-    setRandom() {
-        this.data.forEach(e => {
-            e.setProperty("random", Math.ceil(Math.random() * 9999));
-        });
-        return this.response(0, "ok", true, this.data);
-    }
 } //class end
 
 export default Collection;

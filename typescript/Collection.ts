@@ -44,11 +44,7 @@ item.parentId = "0"; //imp
 this.data.push(item);
 return  this.response(0,"All ok",true,item);
 }   
-/**
- * 
- * @param index 
- * the only difference between getting directly the id 4and calling this function is that this function checks the index bounds
- */
+
 public indexToId(index:number):ReturnObject {
 //-----------checkIndexBoundsResult    
 const checkIndexBoundsResult = this.checkIndexBounds(index);
@@ -72,50 +68,6 @@ for (let idx = 0; idx < this.data.length; idx++) {
 return this.response(3,"Could not find the index. Most probably the id was not found");    
 }//...............abs
 
-isFirst(id:string):ReturnObject{
-    if (this.data[0].id == id) {
-        return true;
-    }
-    else {
-        return false;
-    }
-} //getItem
-getFirst():ReturnObject { //what if the collection is empty?
-    return this.data[0];
-} //getItem
-getLast():ReturnObject {
-    return this.data[this.data.length - 1];
-} //getItem
-isLast(id:string|number):ReturnObject {
-    if (this.data[this.data.length - 1].id == id) {
-        return true;
-    }
-    else {
-        return false;
-    }
-} //getItem
-/**Just send back the first one  */
-//------------------Batch 3
-find(id:string):ReturnObject {
-    let final:boolean|ICollectionItem = false;
-    this.data.forEach(e => {
-        if (e.id == id) {
-            final = e;
-        }
-    });
-    return final;
-} //getItem
-
-findChildren(parentItemId:string|number):ReturnObject {
-    let final:ICollectionItem[] = [];
-    this.data.forEach(e => {
-        if (e['parentId'] == parentItemId) {
-            final.push(e);
-        }
-    });
-    return final;
-} //
-//-----------------------------------sort ends
 public getPrevByIndex(item:ICollectionItem):ReturnObject {
     let isFirst = this.isFirst(item.id);
     if (isFirst == false) {
@@ -136,20 +88,6 @@ public getNextByIndex(item:CollectionItem):ReturnObject {
         return false;
     }
 } //fn
-
-public setPropertyAll(property:keyof CollectionItem, value:any):ReturnObject {
-    let arr = [];
-    this.data.forEach(e => {
-        e.setProperty(property,value);
-    });    
-return this.response(0,"ok",true,this.data); 
-}
-public setRandom():ReturnObject {
-    this.data.forEach(e => {
-        e.setProperty("random",Math.ceil(Math.random()*9999));
-    });
-return this.response(0,"ok",true,this.data);
-}
 
 
 } //class end

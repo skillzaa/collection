@@ -27,5 +27,11 @@ export default class CollectionBase {
     protected shouldBeStringNumberOrBool(value: string | number | boolean): ReturnObject;
     push(a: ICollectionItem): ReturnObject;
     get length(): number;
+    setPropertyAll(property: keyof CollectionItem, value: any): ReturnObject;
+    setRandom(): ReturnObject;
+    isFirst(id: string): ReturnObject;
+    getFirst(): ReturnObject;
+    getLast(): ReturnObject;
+    isLast(id: string | number): ReturnObject;
 }
 //# sourceMappingURL=CollectionBase.d.ts.map

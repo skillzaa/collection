@@ -107,5 +107,43 @@ get length():number {
     return this.data.length;
 }
 
+
+public setPropertyAll(property:keyof CollectionItem, value:any):ReturnObject {
+    let arr = [];
+    this.data.forEach(e => {
+        e.setProperty(property,value);
+    });    
+return this.response(0,"ok",true,this.data); 
+}
+public setRandom():ReturnObject {
+    this.data.forEach(e => {
+        e.setProperty("random",Math.ceil(Math.random()*9999));
+    });
+return this.response(0,"ok",true,this.data);
+}
+
+
+isFirst(id:string):Boolean{
+    if (this.data[0].id == id) {
+        return true;
+    }
+    else {
+        return false;
+    }
+} //getItem
+getFirst():ICollectionItem { //what if the collection is empty?
+    return this.data[0];
+} //getItem
+getLast():ICollectionItem {
+    return this.data[this.data.length - 1];
+} //getlast
+isLast(id:string):boolean {
+    if (this.data[this.data.length - 1].id == id) {
+        return true;
+    }
+    else {
+        return false;
+    }
+} //islast
 ////////////////////////////////////////
 } //class ends    
